@@ -22,18 +22,20 @@ public class ChessBoard extends AnchorPane {
         backgroundGridHandler.updateGrid();
 
         // Add the black king.
-        BlackKing bk = new BlackKing("BK", 100, 0, true);
+        BlackKing bk = new BlackKing("BK", this, 100, 0, true);
         this.getChildren().add(bk);
         draggableMakerGrid.makeDraggable(bk);
 
         // Add the black queen.
-        BlackQueen bq = new BlackQueen("BQ", 150, 0, true);
+        BlackQueen bq = new BlackQueen("BQ", this, 150, 0, true);
         this.getChildren().add(bq);
         draggableMakerGrid.makeDraggable(bq);
 
         // Add the white king.
-        WhiteKing wk = new WhiteKing("WK", 150, 350, false);
+        WhiteKing wk = new WhiteKing("WK", this, 150, 350, false);
         this.getChildren().add(wk);
         draggableMakerGrid.makeDraggable(wk);
     }
+
+
 }

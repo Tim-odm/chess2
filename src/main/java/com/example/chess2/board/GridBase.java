@@ -11,9 +11,9 @@ import javafx.scene.layout.AnchorPane;
 public abstract class GridBase {
     private double planeWidth;
     private double planeHeight;
-    private int tilesAcross;
-    private int tilesDown;
-    private int gridSize;
+    private static int tilesAcross;
+    private static int tilesDown;
+    private static int gridSize;
     private int tileAmount;
     private AnchorPane anchorPane;
 
@@ -43,15 +43,15 @@ public abstract class GridBase {
         return planeWidth;
     }
 
-    public int getTilesAcross() {
+    public static int getTilesAcross() {
         return tilesAcross;
     }
 
-    public int getTilesDown() {
+    public static int getTilesDown() {
         return tilesDown;
     }
 
-    public int getGridSize() {
+    public static int getGridSize() {
         return gridSize;
     }
 

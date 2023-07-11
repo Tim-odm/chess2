@@ -1,11 +1,19 @@
 package com.example.chess2.pieces;
 
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
+
 public abstract class ChessPiece extends StackPane {
+    /**
+     *
+     */
+    protected AnchorPane anchorPane;
     /**
      * Size of the pane.
      */
@@ -35,7 +43,7 @@ public abstract class ChessPiece extends StackPane {
      */
     private boolean isBlack;
 
-    ChessPiece(String name, int posiX, int posiY, boolean isBlack) {
+    ChessPiece(String name, AnchorPane anchorPane, int posiX, int posiY, boolean isBlack) {
         this.setWidth(PANE_SIZE);
         this.setHeight(PANE_SIZE);
         this.setLayoutX(posiX);
@@ -51,4 +59,9 @@ public abstract class ChessPiece extends StackPane {
         }
         this.getChildren().addAll(rectangle, text);
     }
+
+    public abstract ArrayList<Integer> getPossibleMoves(int x, int y);
+
+    public abstract void highLightMoves(ArrayList<Integer> moves);
+
 }

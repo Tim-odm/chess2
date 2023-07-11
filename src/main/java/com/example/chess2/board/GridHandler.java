@@ -15,7 +15,7 @@ public class GridHandler extends GridBase {
 
     Color bgWhite = Color.WHITE;
     Color bgGrey = Color.color(0.82, 0.82, 0.82);
-    int[][] boardPositions = new int[8][8];
+    static int[][] boardPositions = new int[8][8];
 
     /**
      * Constructor for the GridHandler class.
@@ -59,10 +59,22 @@ public class GridHandler extends GridBase {
         System.out.println(Arrays.deepToString(boardPositions));
     }
 
-    public int getBoardPosition(double x, double y) {
+    public static int getBoardPosition(double x, double y) {
         int a = (int) ((x/getGridSize()) % getTilesAcross());
         int b = (int) ((y/getGridSize()) % getTilesDown());
         return boardPositions[a][b];
     }
-}
+
+    public static int getBoardPosition(int x, int y) {
+        return boardPositions[x][y];
+    }
+
+    public static int getXCoord(int boardPosition) {
+        return boardPosition % 8;
+    }
+
+    public static int getYCoord(int boardPosition) {
+        return boardPosition / 8;
+    }
+ }
 
