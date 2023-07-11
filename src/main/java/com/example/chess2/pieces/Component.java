@@ -1,4 +1,4 @@
-package com.example.chess2;
+package com.example.chess2.pieces;
 
 import javafx.scene.shape.Rectangle;
 

@@ -1,7 +1,6 @@
 package com.example.chess2;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+import com.example.chess2.board.ChessBoard;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -10,9 +9,8 @@ import java.io.IOException;
 public class ChessApplication extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 400, 600);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(new ChessBoard());
+        stage.setTitle("Chess");
         stage.setScene(scene);
         stage.show();
     }
