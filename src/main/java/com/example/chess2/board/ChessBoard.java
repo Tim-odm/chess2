@@ -3,6 +3,7 @@ package com.example.chess2.board;
 import com.example.chess2.pieces.BlackKing;
 import com.example.chess2.pieces.BlackQueen;
 import com.example.chess2.pieces.WhiteKing;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class ChessBoard extends AnchorPane {

@@ -5,6 +5,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Arrays;
+
 /**
  * This class inherits from GridBase and basically "draws the grid".
  * @author
@@ -13,6 +15,7 @@ public class GridHandler extends GridBase {
 
     Color bgWhite = Color.WHITE;
     Color bgGrey = Color.color(0.82, 0.82, 0.82);
+    int[][] boardPositions = new int[8][8];
 
     /**
      * Constructor for the GridHandler class.
@@ -34,6 +37,8 @@ public class GridHandler extends GridBase {
             int x = (i % getTilesAcross());
             int y = (i / getTilesAcross());
 
+            boardPositions[x][y] = i;
+
             Rectangle rectangle = new Rectangle(x * getGridSize(),y * getGridSize(),getGridSize(),getGridSize());
             Label label = new Label(Integer.toString(i));
             label.setLayoutX(x * 50);
@@ -51,6 +56,13 @@ public class GridHandler extends GridBase {
             getAnchorPane().getChildren().add(rectangle);
             getAnchorPane().getChildren().add(label);
         }
+        System.out.println(Arrays.deepToString(boardPositions));
+    }
+
+    public int getBoardPosition(double x, double y) {
+        int a = (int) ((x/getGridSize()) % getTilesAcross());
+        int b = (int) ((y/getGridSize()) % getTilesDown());
+        return boardPositions[a][b];
     }
 }
 

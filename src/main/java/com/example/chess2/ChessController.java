@@ -4,8 +4,10 @@ import com.example.chess2.board.DraggableMakerGrid;
 import com.example.chess2.board.GridHandler;
 import com.example.chess2.pieces.BlackKing;
 import com.example.chess2.pieces.Component;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;

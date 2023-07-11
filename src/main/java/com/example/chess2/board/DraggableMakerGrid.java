@@ -82,9 +82,8 @@ public class DraggableMakerGrid extends GridBase {
      * Method to make a stackPane draggable.
      */
     public void makeDraggable(StackPane stackPane) {
-        Node node = stackPane;
 
-        node.setOnMouseDragged(mouseEvent -> {
+        stackPane.setOnMouseDragged(mouseEvent -> {
             // Get X and Y coords of the mouse event.
             mouseAnchorX = mouseEvent.getSceneX();
             mouseAnchorY = mouseEvent.getSceneY();
@@ -100,11 +99,9 @@ public class DraggableMakerGrid extends GridBase {
             System.out.println("Y:" + y);
 
             // Snap the component to correct grid.
-            node.setLayoutX(x);
-            node.setLayoutY(y);
+            stackPane.setLayoutX(x);
+            stackPane.setLayoutY(y);
 
         });
-
-
     }
 }
