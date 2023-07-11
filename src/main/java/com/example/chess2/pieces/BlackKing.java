@@ -18,16 +18,7 @@ public class BlackKing extends ChessPiece {
     private int labelX;
     private int labelY;
 
-    public BlackKing(int startX, int startY) {
-        this.setLayoutX(startX);
-        this.setLayoutY(startY);
-        this.setWidth(50);
-        this.setHeight(50);
-        rectangle = new Rectangle(startX, startY, 50, 50);
-        rectangle.setFill(Color.BLACK);
-        Text text = new Text("BK");
-        text.setFill(Color.WHITE);
-        text.setStyle("-fx-text-fill: white; -fx-font-size: 16px");
-        this.getChildren().addAll(rectangle, text);
+    public BlackKing(String name, int posiX, int posiY, boolean isBlack) {
+        super(name, posiX, posiY, isBlack);
     }
 }
