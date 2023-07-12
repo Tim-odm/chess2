@@ -3,8 +3,6 @@ package com.example.chess2.pieces;
 import com.example.chess2.board.GridHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
@@ -22,8 +20,10 @@ public class BlackKing extends ChessPiece {
             int x = (int) ((mouseEvent.getSceneX()/50) % 8);
             int y = (int) ((mouseEvent.getSceneY()/50) % 8);
             ArrayList<Integer> moves = this.getPossibleMoves(x, y);
-            this.highLightMoves(moves);
+            GridHandler.highlightMoves(moves);
         });
+
+        this.addEventHandler(MouseEvent.MOUSE_EXITED, mouseEvent -> GridHandler.clearBoard());
     }
 
     @Override
@@ -34,15 +34,5 @@ public class BlackKing extends ChessPiece {
         moves.add(PieceMoves.left(x, y));
         moves.add(PieceMoves.right(x, y));
         return moves;
-    }
-
-    public void highLightMoves(ArrayList<Integer> moves) {
-        for(Integer i: moves) {
-            int x = GridHandler.getXCoord(i);
-            int y = GridHandler.getYCoord(i);
-            Rectangle rectangle = new Rectangle(x*50, y*50, 50,50);
-            rectangle.setFill(Color.GREEN);
-            anchorPane.getChildren().add(rectangle);
-        }
     }
 }

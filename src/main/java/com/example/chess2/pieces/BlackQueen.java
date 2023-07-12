@@ -13,9 +13,4 @@ public class BlackQueen extends ChessPiece{
     public ArrayList<Integer> getPossibleMoves(int x, int y) {
         return null;
     }
-
-    @Override
-    public void highLightMoves(ArrayList<Integer> moves) {
-
-    }
 }

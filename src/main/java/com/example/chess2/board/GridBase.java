@@ -14,7 +14,7 @@ public abstract class GridBase {
     private static int tilesAcross;
     private static int tilesDown;
     private static int gridSize;
-    private int tileAmount;
+    private static int tileAmount;
     private AnchorPane anchorPane;
 
     /**
@@ -55,7 +55,7 @@ public abstract class GridBase {
         return gridSize;
     }
 
-    public int getTileAmount() {
+    public static int getTileAmount() {
         return tileAmount;
     }
 

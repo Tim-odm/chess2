@@ -61,7 +61,4 @@ public abstract class ChessPiece extends StackPane {
     }
 
     public abstract ArrayList<Integer> getPossibleMoves(int x, int y);
-
-    public abstract void highLightMoves(ArrayList<Integer> moves);
-
 }

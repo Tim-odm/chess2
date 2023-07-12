@@ -14,8 +14,8 @@ import java.util.Arrays;
  */
 public class GridHandler extends GridBase {
 
-    private final Color bgWhite = Color.WHITE;
-    private final Color bgGrey = Color.color(0.82, 0.82, 0.82);
+    private final static Color bgWhite = Color.WHITE;
+    private final static Color bgGrey = Color.color(0.82, 0.82, 0.82);
     private final static int[][] boardPositions = new int[8][8];
     private static ArrayList<Rectangle> rectangles;
 
@@ -100,6 +100,23 @@ public class GridHandler extends GridBase {
             rectangles.get(i).setFill(Color.GREEN);
         }
     }
+
+    /**
+     * This method resets the color of all squares on the board.
+     */
+    public static void clearBoard() {
+        for (int i = 0; i < getTileAmount(); i++) {
+            int x = (i % getTilesAcross());
+            int y = (i / getTilesAcross());
+
+            if((x + y) % 2 == 0){
+                rectangles.get(i).setFill(bgWhite);
+            } else {
+                rectangles.get(i).setFill(bgGrey);
+            }
+        }
+    }
+
     public static int getXCoord(int boardPosition) {
         return boardPosition % 8;
     }
