@@ -15,14 +15,6 @@ public class BlackKing extends ChessPiece {
     public BlackKing(String name, AnchorPane anchorPane, int posiX, int posiY, boolean isBlack) {
         super(name, anchorPane, posiX, posiY, isBlack);
 
-        // Event handler to get possible moves
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            int x = (int) ((mouseEvent.getSceneX()/50) % 8);
-            int y = (int) ((mouseEvent.getSceneY()/50) % 8);
-            ArrayList<Integer> moves = this.getPossibleMoves(x, y);
-            GridHandler.highlightMoves(moves);
-        });
-
         this.addEventHandler(MouseEvent.MOUSE_EXITED, mouseEvent -> GridHandler.clearBoard());
     }
 

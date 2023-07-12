@@ -1,5 +1,9 @@
 package com.example.chess2.pieces;
 
+import com.example.chess2.board.GridHandler;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -43,6 +47,11 @@ public abstract class ChessPiece extends StackPane {
      */
     private boolean isBlack;
 
+    /**
+     *
+     */
+    private EventHandler<InputEvent> clickedOn;
+
     ChessPiece(String name, AnchorPane anchorPane, int posiX, int posiY, boolean isBlack) {
         this.setWidth(PANE_SIZE);
         this.setHeight(PANE_SIZE);
@@ -58,6 +67,23 @@ public abstract class ChessPiece extends StackPane {
             text.setFill(Color.BLACK);
         }
         this.getChildren().addAll(rectangle, text);
+
+        // Event handler for when a piece is clicked on showing possible moves.
+        EventHandler<MouseEvent> clickedOn = clickOnEvent();
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, clickedOn);
+    }
+
+    /**
+     * This method handles events for when a piece is clicked on.
+     * @return mouseEvent (in lambda form)
+     */
+    private EventHandler<MouseEvent> clickOnEvent() {
+        return mouseEvent -> {
+            int x = (int) ((mouseEvent.getSceneX()/50) % 8);
+            int y = (int) ((mouseEvent.getSceneY()/50) % 8);
+            ArrayList<Integer> moves = getPossibleMoves(x, y);
+            GridHandler.highlightMoves(moves);
+        };
     }
 
     public abstract ArrayList<Integer> getPossibleMoves(int x, int y);
