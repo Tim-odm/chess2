@@ -5,6 +5,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -13,9 +14,10 @@ import java.util.Arrays;
  */
 public class GridHandler extends GridBase {
 
-    Color bgWhite = Color.WHITE;
-    Color bgGrey = Color.color(0.82, 0.82, 0.82);
-    static int[][] boardPositions = new int[8][8];
+    private final Color bgWhite = Color.WHITE;
+    private final Color bgGrey = Color.color(0.82, 0.82, 0.82);
+    private final static int[][] boardPositions = new int[8][8];
+    private static ArrayList<Rectangle> rectangles;
 
     /**
      * Constructor for the GridHandler class.
@@ -26,6 +28,7 @@ public class GridHandler extends GridBase {
      */
     public GridHandler(double planeWidth, double planeHeight, int gridSize, AnchorPane anchorPane) {
         super(planeWidth, planeHeight, gridSize, anchorPane);
+        rectangles = new ArrayList<>();
     }
 
     /**
@@ -51,24 +54,52 @@ public class GridHandler extends GridBase {
                 rectangle.setFill(bgGrey);
             }
 
+            // Add the rectangle to the array
+            rectangles.add(rectangle);
+
             // Attach both the rectangle and label to the **MAIN** pane at the
             // correct X and Y coors
             getAnchorPane().getChildren().add(rectangle);
             getAnchorPane().getChildren().add(label);
         }
+        // Check if the 2D array is storing positions correctly.
         System.out.println(Arrays.deepToString(boardPositions));
     }
 
+    /**
+     * Given a pixel on the screen this method should return the index of the
+     * board position.
+     * @param x Pixel position in the X axis.
+     * @param y Pixel position in the Y axis.
+     * @return Board position index.
+     */
     public static int getBoardPosition(double x, double y) {
         int a = (int) ((x/getGridSize()) % getTilesAcross());
         int b = (int) ((y/getGridSize()) % getTilesDown());
         return boardPositions[a][b];
     }
 
+    /**
+     * Given board coordinates this method should return the index of the
+     * board position.
+     * @param x The X coordinate.
+     * @param y The Y coordinate.
+     * @return Board position index.
+     */
     public static int getBoardPosition(int x, int y) {
         return boardPositions[x][y];
     }
 
+    /**
+     * This method highlights squares where a piece could potentially move.
+     * @param potentialMoves An ArrayList containing the index positions of the
+     *                       potential moves a piece can make.
+     */
+    public static void highlightMoves(ArrayList<Integer> potentialMoves) {
+        for (Integer i: potentialMoves) {
+            rectangles.get(i).setFill(Color.GREEN);
+        }
+    }
     public static int getXCoord(int boardPosition) {
         return boardPosition % 8;
     }
