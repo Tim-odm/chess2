@@ -14,8 +14,6 @@ public class BlackKing extends ChessPiece {
 
     public BlackKing(String name, AnchorPane anchorPane, int posiX, int posiY, boolean isBlack) {
         super(name, anchorPane, posiX, posiY, isBlack);
-
-        this.addEventHandler(MouseEvent.MOUSE_EXITED, mouseEvent -> GridHandler.clearBoard());
     }
 
     @Override

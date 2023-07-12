@@ -29,6 +29,7 @@ public class GridHandler extends GridBase {
     public GridHandler(double planeWidth, double planeHeight, int gridSize, AnchorPane anchorPane) {
         super(planeWidth, planeHeight, gridSize, anchorPane);
         rectangles = new ArrayList<>();
+
     }
 
     /**

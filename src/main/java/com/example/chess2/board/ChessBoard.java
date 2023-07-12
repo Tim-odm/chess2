@@ -3,6 +3,7 @@ package com.example.chess2.board;
 import com.example.chess2.pieces.BlackKing;
 import com.example.chess2.pieces.BlackQueen;
 import com.example.chess2.pieces.WhiteKing;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class ChessBoard extends AnchorPane {
@@ -19,6 +20,9 @@ public class ChessBoard extends AnchorPane {
                 GRIDSIZE, this);
         // Draw the grid.
         backgroundGridHandler.updateGrid();
+
+        // Add an event handler for the board that clears it whenever it is clicked.
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> GridHandler.clearBoard());
 
         // Add the black king.
         BlackKing bk = new BlackKing("BK", this, 100, 0, true);

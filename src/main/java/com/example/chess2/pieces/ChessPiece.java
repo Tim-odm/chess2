@@ -72,7 +72,7 @@ public abstract class ChessPiece extends StackPane {
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, clickOnEvent());
 
         // Event handler for when the mouse exits a piece clearing the board.
-        this.addEventHandler(MouseEvent.MOUSE_EXITED, mouseExitedEvent());
+        // this.addEventHandler(MouseEvent.MOUSE_EXITED, mouseExitedEvent());
     }
 
     /**
@@ -85,11 +85,15 @@ public abstract class ChessPiece extends StackPane {
             int y = (int) ((mouseEvent.getSceneY()/50) % 8);
             ArrayList<Integer> moves = getPossibleMoves(x, y);
             GridHandler.highlightMoves(moves);
+            mouseEvent.consume();
         };
     }
 
     private EventHandler<MouseEvent> mouseExitedEvent() {
-        return mouseEvent -> GridHandler.clearBoard();
+        return mouseEvent -> {
+            GridHandler.clearBoard();
+            mouseEvent.consume();
+        };
     }
 
     public abstract ArrayList<Integer> getPossibleMoves(int x, int y);
