@@ -11,6 +11,8 @@ public class BlackQueen extends ChessPiece{
 
     @Override
     public ArrayList<Integer> getPossibleMoves(int x, int y) {
-        return null;
+        ArrayList<Integer> moves = PieceMoves.straights(x, y);
+        moves.addAll(PieceMoves.diagonals(x, y));
+        return moves;
     }
 }
