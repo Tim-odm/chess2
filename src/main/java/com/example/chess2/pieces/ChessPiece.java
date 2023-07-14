@@ -3,7 +3,6 @@ package com.example.chess2.pieces;
 import com.example.chess2.board.ChessBoard;
 import com.example.chess2.board.GridHandler;
 import javafx.event.EventHandler;
-import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -11,7 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public abstract class ChessPiece extends StackPane {
@@ -33,14 +31,21 @@ public abstract class ChessPiece extends StackPane {
      */
     private Text text;
     /**
-     * X position of the piece on the grid.
+     * X position of the piece on the grid in terms of pixels.
      */
-    private int posiX;
+    private int posiX; // use get layout
 
     /**
-     * Y position of the piece on the grid.
+     * Y position of the piece on the grid in terms of pixels.
      */
-    private int posiY;
+    private int posiY; // use get layout
+
+    /**
+     *
+     */
+    private int indexX;
+
+    private int indexY;
 
     /**
      * Boolean to define if the piece is black or white.
@@ -48,19 +53,24 @@ public abstract class ChessPiece extends StackPane {
     private boolean isBlack;
 
     /**
-     *
+     * Boolean value to define if a piece is currently being selected.
      */
     private boolean isSelected;
+
+
 
     private ArrayList<Integer> moves;
 
     ChessPiece(String name, AnchorPane anchorPane, int posiX, int posiY, boolean isBlack) {
         // Setting the basics
+        this.anchorPane = anchorPane;
         this.setWidth(PANE_SIZE);
         this.setHeight(PANE_SIZE);
         this.setLayoutX(posiX);
         this.setLayoutY(posiY);
         this.isSelected = false;
+        this.indexX = ((posiX/50) % 8);
+        this.indexY = ((posiY/50) % 8);
 
         // Initialisations
         rectangle = new Rectangle(0,0, PANE_SIZE, PANE_SIZE);
@@ -82,6 +92,14 @@ public abstract class ChessPiece extends StackPane {
 
         // Event handler for when the mouse exits a piece clearing the board.
         // this.addEventHandler(MouseEvent.MOUSE_EXITED, mouseExitedEvent());
+    }
+
+    public int getIndexX() {
+        return this.indexX;
+    }
+
+    public int getIndexY() {
+        return this.indexY;
     }
 
     public Text getText() {
@@ -119,6 +137,17 @@ public abstract class ChessPiece extends StackPane {
             GridHandler.highlightMoves(moves);
             mouseEvent.consume();
         };
+    }
+
+    /**
+     * This method updates the current position of the piece every time it is
+     * moved.
+     * @param x The X index position of the piece.
+     * @param y The Y index position of the piece.
+     */
+    public void updateCurrentPosition(int x, int y) {
+        this.indexX = x;
+        this.indexY = y;
     }
 
     public abstract ArrayList<Integer> getPossibleMoves(int x, int y);

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * This class inherits from GridBase and basically "draws the grid".
+ * This class inherits from GridBase and basically "draws the grid". This class
+ * should handle any operations related to 8x8 grid.
  * @author
  */
 public class GridHandler extends GridBase {
@@ -35,7 +36,8 @@ public class GridHandler extends GridBase {
     }
 
     /**
-     * This method draws the grid (chessboard);
+     * This method draws the grid (chessboard) and stores the value of each
+     * in a 2D array.
      */
     public void updateGrid() {
         for(int i = 0; i < getTileAmount(); i++){
@@ -83,8 +85,7 @@ public class GridHandler extends GridBase {
     }
 
     /**
-     * This method adds an event handler to each rectangle such that if that
-     * rectangle is playable then the selected piece can be moved to it.
+     * This method adds an event handler to each rectangle to make it playable.
      */
     public void makePlayable() {
        for (Rectangle r: rectangles) {
@@ -151,7 +152,7 @@ public class GridHandler extends GridBase {
         }
     }
 
-    // when highlighted rectangle is clicked.
+
 
     public static int getXCoord(int boardPosition) {
         return boardPosition % 8;

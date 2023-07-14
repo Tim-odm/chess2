@@ -111,6 +111,7 @@ public class DraggableMakerGrid extends GridBase {
 
     // makePlayable method that allows a piece to move when it is in play and selected.
     public static void movePiece(ChessPiece piece, int x , int y) {
+        piece.updateCurrentPosition(x, y);
         x *= getGridSize();
         y *= getGridSize();
         piece.setLayoutX(x);

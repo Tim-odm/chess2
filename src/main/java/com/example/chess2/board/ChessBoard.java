@@ -1,23 +1,25 @@
 package com.example.chess2.board;
 
-import com.example.chess2.ChessApplication;
 import com.example.chess2.pieces.ChessPiece;
 import com.example.chess2.pieces.King;
 import com.example.chess2.pieces.Queen;
-import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 
+/**
+ * This class is the node on which the game takes place. It is also responsible for
+ * handling game logic.
+ */
 public class ChessBoard extends AnchorPane {
     /**
      * Grid size variable storing the size of one square on the board.
      */
-    private final int GRIDSIZE = 50;
+    private final int GRID_SIZE = 50;
 
     /**
-     *
+     * An ArrayList of pieces.
      */
     private static ArrayList<ChessPiece> pieces;
 
@@ -25,11 +27,11 @@ public class ChessBoard extends AnchorPane {
 
         // Initialise DraggableMakerGrid that defines the logic for the grid.
         DraggableMakerGrid draggableMakerGrid = new DraggableMakerGrid(400, 400,
-                GRIDSIZE, this);
+                GRID_SIZE, this);
 
         // Initialise the grid handler.
         GridHandler backgroundGridHandler = new GridHandler(400, 400,
-                GRIDSIZE, this);
+                GRID_SIZE, this);
         // Draw the grid.
         backgroundGridHandler.updateGrid();
         backgroundGridHandler.makePlayable();
@@ -74,6 +76,10 @@ public class ChessBoard extends AnchorPane {
         }
     }
 
+    /**
+     * This method gets a selected piece, if present, on the board.
+     * @return The piece that has been selected or null if not present.
+     */
     public static ChessPiece getSelectedPiece() {
         for (ChessPiece piece: pieces) {
             if (piece.getIsSelected()) {
@@ -92,6 +98,8 @@ public class ChessBoard extends AnchorPane {
             // Check if the intended position is highlighted.
             boolean movePotential = checkPlayableMove(x, y);
             if (selectedPiece != null && movePotential) {
+                // check if the intended square is occupied by an opposing piece.
+                // i.e. check potential capture.
                 DraggableMakerGrid.movePiece(selectedPiece, x, y);
             } else {
                 GridHandler.clearBoard();
@@ -99,6 +107,10 @@ public class ChessBoard extends AnchorPane {
         } else {
             GridHandler.clearBoard();
         }
+    }
+
+    public void capture() {
+
     }
 
     private static boolean isPieceInPlay() {
