@@ -60,6 +60,7 @@ public abstract class ChessPiece extends StackPane {
         this.setHeight(PANE_SIZE);
         this.setLayoutX(posiX);
         this.setLayoutY(posiY);
+        this.isSelected = false;
 
         // Initialisations
         rectangle = new Rectangle(0,0, PANE_SIZE, PANE_SIZE);

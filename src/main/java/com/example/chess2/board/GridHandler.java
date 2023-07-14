@@ -116,11 +116,10 @@ public class GridHandler extends GridBase {
      *                       potential moves a piece can make.
      */
     public static void highlightMoves(ArrayList<Integer> potentialMoves) {
-        clearSqauresInPlay();
+        clearSquaresInPlay();
         for (Integer i: potentialMoves) {
             rectangles.get(i).setFill(Color.LIGHTGREEN);
             setSquareInPlay(i);
-
         }
     }
 
@@ -128,8 +127,12 @@ public class GridHandler extends GridBase {
         squares[i] = true;
     }
 
-    public static void clearSqauresInPlay() {
+    public static void clearSquaresInPlay() {
         Arrays.fill(squares, false);
+    }
+
+    public static boolean[] getSquaresInPlay() {
+        return squares;
     }
 
     /**

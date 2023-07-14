@@ -74,26 +74,27 @@ public class ChessBoard extends AnchorPane {
         }
     }
 
-    public static ChessPiece getSelectedPiece() throws NullPointerException{
+    public static ChessPiece getSelectedPiece() {
         for (ChessPiece piece: pieces) {
             if (piece.getIsSelected()) {
                 return piece;
             }
         }
-        throw new NullPointerException("No piece was selected.");
+        return null;
     }
 
     public static void potentialMove(int x, int y) {
+        // Check if piece is in play
         if (isPieceInPlay()) {
-            ChessPiece selectedPiece = null;
-            try {
-                selectedPiece = getSelectedPiece();
-            } catch (Exception e) {
-                GridHandler.clearBoard();
-            }
+            // Get the piece in play
+            ChessPiece selectedPiece = getSelectedPiece();
 
-            if (selectedPiece != null) {
+            // Check if the intended position is highlighted.
+            boolean movePotential = checkPlayableMove(x, y);
+            if (selectedPiece != null && movePotential) {
                 DraggableMakerGrid.movePiece(selectedPiece, x, y);
+            } else {
+                GridHandler.clearBoard();
             }
         } else {
             GridHandler.clearBoard();
@@ -107,5 +108,9 @@ public class ChessBoard extends AnchorPane {
             }
         }
         return false;
+    }
+
+    private static boolean checkPlayableMove(int x, int y) {
+        return GridHandler.getSquaresInPlay()[GridHandler.getBoardPosition(x, y)];
     }
 }
