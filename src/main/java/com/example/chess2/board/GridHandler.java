@@ -19,6 +19,8 @@ public class GridHandler extends GridBase {
     private final static int[][] boardPositions = new int[8][8];
     private static ArrayList<Rectangle> rectangles;
 
+    private static boolean[] squares;
+
     /**
      * Constructor for the GridHandler class.
      * @param planeWidth The width of the plane = 400px.
@@ -29,7 +31,7 @@ public class GridHandler extends GridBase {
     public GridHandler(double planeWidth, double planeHeight, int gridSize, AnchorPane anchorPane) {
         super(planeWidth, planeHeight, gridSize, anchorPane);
         rectangles = new ArrayList<>();
-
+        squares = new boolean[64];
     }
 
     /**
@@ -81,6 +83,23 @@ public class GridHandler extends GridBase {
     }
 
     /**
+     * This method adds an event handler to each rectangle such that if that
+     * rectangle is playable then the selected piece can be moved to it.
+     */
+    public void makePlayable() {
+       for (Rectangle r: rectangles) {
+           r.setOnMouseClicked(mouseEvent -> {
+               double mouseAnchorX = mouseEvent.getSceneX();
+               double mouseAnchorY = mouseEvent.getSceneY();
+
+               int x = (int) ((mouseAnchorX / getGridSize()) % getTilesAcross());
+               int y = (int) ((mouseAnchorY / getGridSize()) % getTilesDown());
+               ChessBoard.potentialMove(x, y);
+           });
+       }
+    }
+
+    /**
      * Given board coordinates this method should return the index of the
      * board position.
      * @param x The X coordinate.
@@ -97,9 +116,20 @@ public class GridHandler extends GridBase {
      *                       potential moves a piece can make.
      */
     public static void highlightMoves(ArrayList<Integer> potentialMoves) {
+        clearSqauresInPlay();
         for (Integer i: potentialMoves) {
-            rectangles.get(i).setFill(Color.GREEN);
+            rectangles.get(i).setFill(Color.LIGHTGREEN);
+            setSquareInPlay(i);
+
         }
+    }
+
+    public static void setSquareInPlay(int i) {
+        squares[i] = true;
+    }
+
+    public static void clearSqauresInPlay() {
+        Arrays.fill(squares, false);
     }
 
     /**
@@ -117,6 +147,8 @@ public class GridHandler extends GridBase {
             }
         }
     }
+
+    // when highlighted rectangle is clicked.
 
     public static int getXCoord(int boardPosition) {
         return boardPosition % 8;

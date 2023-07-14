@@ -32,6 +32,7 @@ public class ChessBoard extends AnchorPane {
                 GRIDSIZE, this);
         // Draw the grid.
         backgroundGridHandler.updateGrid();
+        backgroundGridHandler.makePlayable();
 
         pieces = new ArrayList<>();
         // Add the black king.
@@ -54,29 +55,57 @@ public class ChessBoard extends AnchorPane {
         draggableMakerGrid.makeDraggable(pieces);
 
         // Add an event handler for the board that clears it whenever it is clicked.
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, clearBoard());
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> clearBoard());
     }
 
     /**
      * This method clears the board and unselects any selected pieces.
-     * @return As above.
      */
-    private EventHandler<MouseEvent> clearBoard() {
-        return mouseEvent -> {
-            GridHandler.clearBoard();
-            for (ChessPiece piece: pieces) {
-                if (piece.getIsSelected()) {
-                    System.out.println(piece.getText().getText() + " was selected");
-                    piece.setIsSelected(false);
-                }
-            }
-        };
-    }
-
-    public static void unselectAll() {
+    public static void clearBoard() {
+        // Method should clear board and also clear moves of a piece to avoid it
+        // moving after the board has been cleared. I.e. moves are still stored on the
+        // piece data but board is cleared
         GridHandler.clearBoard();
         for (ChessPiece piece: pieces) {
+            if (piece.getIsSelected()) {
+                System.out.println(piece.getText().getText() + " was selected");
+            }
             piece.setIsSelected(false);
         }
+    }
+
+    public static ChessPiece getSelectedPiece() throws NullPointerException{
+        for (ChessPiece piece: pieces) {
+            if (piece.getIsSelected()) {
+                return piece;
+            }
+        }
+        throw new NullPointerException("No piece was selected.");
+    }
+
+    public static void potentialMove(int x, int y) {
+        if (isPieceInPlay()) {
+            ChessPiece selectedPiece = null;
+            try {
+                selectedPiece = getSelectedPiece();
+            } catch (Exception e) {
+                GridHandler.clearBoard();
+            }
+
+            if (selectedPiece != null) {
+                DraggableMakerGrid.movePiece(selectedPiece, x, y);
+            }
+        } else {
+            GridHandler.clearBoard();
+        }
+    }
+
+    private static boolean isPieceInPlay() {
+        for (ChessPiece piece: pieces) {
+            if (piece.getIsSelected()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

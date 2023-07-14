@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public abstract class ChessPiece extends StackPane {
@@ -51,13 +52,21 @@ public abstract class ChessPiece extends StackPane {
      */
     private boolean isSelected;
 
+    private ArrayList<Integer> moves;
+
     ChessPiece(String name, AnchorPane anchorPane, int posiX, int posiY, boolean isBlack) {
+        // Setting the basics
         this.setWidth(PANE_SIZE);
         this.setHeight(PANE_SIZE);
         this.setLayoutX(posiX);
         this.setLayoutY(posiY);
+
+        // Initialisations
         rectangle = new Rectangle(0,0, PANE_SIZE, PANE_SIZE);
         text = new Text(name);
+        moves = new ArrayList<>();
+
+        // set black or white
         if (isBlack) {
             rectangle.setFill(Color.BLACK);
             text.setFill(Color.WHITE);
@@ -82,6 +91,10 @@ public abstract class ChessPiece extends StackPane {
         return isSelected;
     }
 
+    public ArrayList<Integer> getMoves() {
+        return this.moves;
+    }
+
     public void setIsSelected(boolean isSelected) {
         this.isSelected = isSelected;
     }
@@ -93,7 +106,7 @@ public abstract class ChessPiece extends StackPane {
     private EventHandler<MouseEvent> clickOnEvent() {
         return mouseEvent -> {
             // Unselect all pieces.
-            ChessBoard.unselectAll();
+            ChessBoard.clearBoard();
 
             // Set current piece selected to true
             isSelected = true;
@@ -101,15 +114,8 @@ public abstract class ChessPiece extends StackPane {
             // Get the possible moves
             int x = (int) ((mouseEvent.getSceneX()/50) % 8);
             int y = (int) ((mouseEvent.getSceneY()/50) % 8);
-            ArrayList<Integer> moves = getPossibleMoves(x, y);
+            moves = getPossibleMoves(x, y);
             GridHandler.highlightMoves(moves);
-            mouseEvent.consume();
-        };
-    }
-
-    private EventHandler<MouseEvent> mouseExitedEvent() {
-        return mouseEvent -> {
-            GridHandler.clearBoard();
             mouseEvent.consume();
         };
     }
