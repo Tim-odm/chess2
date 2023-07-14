@@ -1,9 +1,12 @@
 package com.example.chess2.board;
 
+import com.example.chess2.pieces.ChessPiece;
 import com.example.chess2.pieces.Component;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+
+import java.util.ArrayList;
 
 /**
  * This class is the implementation of the abstract class GridBase.
@@ -81,27 +84,28 @@ public class DraggableMakerGrid extends GridBase {
     /**
      * Method to make a stackPane draggable.
      */
-    public void makeDraggable(StackPane stackPane) {
+    public void makeDraggable(ArrayList<ChessPiece> pieces) {
+        for (ChessPiece piece: pieces) {
+            piece.setOnMouseDragged(mouseEvent -> {
+                // Get X and Y coords of the mouse event.
+                mouseAnchorX = mouseEvent.getSceneX();
+                mouseAnchorY = mouseEvent.getSceneY();
+                System.out.println("Anchor X:" + mouseAnchorX);
+                System.out.println("Anchor Y:" + mouseAnchorY);
 
-        stackPane.setOnMouseDragged(mouseEvent -> {
-            // Get X and Y coords of the mouse event.
-            mouseAnchorX = mouseEvent.getSceneX();
-            mouseAnchorY = mouseEvent.getSceneY();
-            System.out.println("Anchor X:" + mouseAnchorX);
-            System.out.println("Anchor Y:" + mouseAnchorY);
+                // This logic calculates the X and Y position of the grid we are
+                // currently in.
+                int x = (int) ((mouseAnchorX / getGridSize()) % getTilesAcross()) * getGridSize();
+                int y = (int) ((mouseAnchorY / getGridSize()) % getTilesDown()) * getGridSize();
 
-            // This logic calculates the X and Y position of the grid we are
-            // currently in.
-            int x = (int) ((mouseAnchorX / getGridSize()) % getTilesAcross()) * getGridSize();
-            int y = (int) ((mouseAnchorY / getGridSize()) % getTilesDown()) * getGridSize();
+                System.out.println("X:" + x);
+                System.out.println("Y:" + y);
 
-            System.out.println("X:" + x);
-            System.out.println("Y:" + y);
+                // Snap the component to correct grid.
+                piece.setLayoutX(x);
+                piece.setLayoutY(y);
 
-            // Snap the component to correct grid.
-            stackPane.setLayoutX(x);
-            stackPane.setLayoutY(y);
-
-        });
+            });
+        }
     }
 }

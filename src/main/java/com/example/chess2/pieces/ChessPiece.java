@@ -1,7 +1,6 @@
 package com.example.chess2.pieces;
 
 import com.example.chess2.board.GridHandler;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
@@ -31,7 +30,6 @@ public abstract class ChessPiece extends StackPane {
      * Text to identify the piece.
      */
     private Text text;
-
     /**
      * X position of the piece on the grid.
      */
@@ -50,7 +48,7 @@ public abstract class ChessPiece extends StackPane {
     /**
      *
      */
-    private EventHandler<InputEvent> clickedOn;
+    private boolean isSelected;
 
     ChessPiece(String name, AnchorPane anchorPane, int posiX, int posiY, boolean isBlack) {
         this.setWidth(PANE_SIZE);
@@ -81,6 +79,10 @@ public abstract class ChessPiece extends StackPane {
      */
     private EventHandler<MouseEvent> clickOnEvent() {
         return mouseEvent -> {
+            // Set selected to true
+            isSelected = true;
+
+            // Get the possible moves
             int x = (int) ((mouseEvent.getSceneX()/50) % 8);
             int y = (int) ((mouseEvent.getSceneY()/50) % 8);
             ArrayList<Integer> moves = getPossibleMoves(x, y);

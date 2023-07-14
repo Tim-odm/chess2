@@ -4,8 +4,8 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 
-public class BlackQueen extends ChessPiece{
-    public BlackQueen(String name, AnchorPane anchorPane, int posiX, int posiY, boolean isBlack) {
+public class Queen extends ChessPiece{
+    public Queen(String name, AnchorPane anchorPane, int posiX, int posiY, boolean isBlack) {
         super(name, anchorPane, posiX, posiY, isBlack);
     }
 
