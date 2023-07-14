@@ -1,5 +1,6 @@
 package com.example.chess2.pieces;
 
+import com.example.chess2.board.ChessBoard;
 import com.example.chess2.board.GridHandler;
 import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
@@ -73,13 +74,28 @@ public abstract class ChessPiece extends StackPane {
         // this.addEventHandler(MouseEvent.MOUSE_EXITED, mouseExitedEvent());
     }
 
+    public Text getText() {
+        return this.text;
+    }
+
+    public boolean getIsSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+
     /**
      * This method handles events for when a piece is clicked on.
      * @return mouseEvent (in lambda form)
      */
     private EventHandler<MouseEvent> clickOnEvent() {
         return mouseEvent -> {
-            // Set selected to true
+            // Unselect all pieces.
+            ChessBoard.unselectAll();
+
+            // Set current piece selected to true
             isSelected = true;
 
             // Get the possible moves

@@ -4,6 +4,7 @@ import com.example.chess2.ChessApplication;
 import com.example.chess2.pieces.ChessPiece;
 import com.example.chess2.pieces.King;
 import com.example.chess2.pieces.Queen;
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -18,7 +19,7 @@ public class ChessBoard extends AnchorPane {
     /**
      *
      */
-    private ArrayList<ChessPiece> pieces;
+    private static ArrayList<ChessPiece> pieces;
 
     public ChessBoard() {
 
@@ -31,9 +32,6 @@ public class ChessBoard extends AnchorPane {
                 GRIDSIZE, this);
         // Draw the grid.
         backgroundGridHandler.updateGrid();
-
-        // Add an event handler for the board that clears it whenever it is clicked.
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> GridHandler.clearBoard());
 
         pieces = new ArrayList<>();
         // Add the black king.
@@ -54,7 +52,31 @@ public class ChessBoard extends AnchorPane {
         this.getChildren().addAll(pieces);
 
         draggableMakerGrid.makeDraggable(pieces);
+
+        // Add an event handler for the board that clears it whenever it is clicked.
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, clearBoard());
     }
 
+    /**
+     * This method clears the board and unselects any selected pieces.
+     * @return As above.
+     */
+    private EventHandler<MouseEvent> clearBoard() {
+        return mouseEvent -> {
+            GridHandler.clearBoard();
+            for (ChessPiece piece: pieces) {
+                if (piece.getIsSelected()) {
+                    System.out.println(piece.getText().getText() + " was selected");
+                    piece.setIsSelected(false);
+                }
+            }
+        };
+    }
 
+    public static void unselectAll() {
+        GridHandler.clearBoard();
+        for (ChessPiece piece: pieces) {
+            piece.setIsSelected(false);
+        }
+    }
 }
