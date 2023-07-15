@@ -1,52 +1,56 @@
-package com.example.chess2.pieces;
+package com.example.chess2.Logic;
 
 import com.example.chess2.board.GridHandler;
 
 import java.util.ArrayList;
 
 public class PieceMoves {
+    private GridHandler gridHandler;
+    public PieceMoves(GridHandler gridHandler) {
+        this.gridHandler = gridHandler;
+    }
 
-    private static int keepBounds(int i) {
+    private int keepBounds(int i) {
         if (i < 0) {
             return 0;
         } else return Math.min(i, 7);
     }
-    public static int up(int x, int y) {
+    public int up(int x, int y) {
         y--;
         y = keepBounds(y);
-        return GridHandler.getBoardPosition(x, y);
+        return this.gridHandler.getBoardPosition(x, y);
     }
 
-    public static int down(int x, int y) {
+    public int down(int x, int y) {
         y++;
         y = keepBounds(y);
-        return GridHandler.getBoardPosition(x, y);
+        return gridHandler.getBoardPosition(x, y);
     }
 
-    public static int right(int x, int y) {
+    public int right(int x, int y) {
         x--;
         x = keepBounds(x);
-        return GridHandler.getBoardPosition(x, y);
+        return gridHandler.getBoardPosition(x, y);
     }
 
-    public static int left(int x, int y) {
+    public int left(int x, int y) {
         x++;
         x = keepBounds(x);
-        return GridHandler.getBoardPosition(x, y);
+        return gridHandler.getBoardPosition(x, y);
     }
 
-    public static ArrayList<Integer> straights(int x, int y) {
+    public ArrayList<Integer> straights(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            boardIndexes.add(GridHandler.getBoardPosition(i, y));
+            boardIndexes.add(gridHandler.getBoardPosition(i, y));
         }
         for (int i = 0; i < 8; i++) {
-            boardIndexes.add(GridHandler.getBoardPosition(x, i));
+            boardIndexes.add(gridHandler.getBoardPosition(x, i));
         }
         return boardIndexes;
     }
 
-    public static ArrayList<Integer> diagonals(int x, int y) {
+    public ArrayList<Integer> diagonals(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         boardIndexes.addAll(upLeft(x, y));
         boardIndexes.addAll(downLeft(x, y));
@@ -55,40 +59,40 @@ public class PieceMoves {
         return boardIndexes;
     }
 
-    private static ArrayList<Integer> upLeft(int x, int y) {
+    private ArrayList<Integer> upLeft(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         while(x >= 0 && y >= 0) {
-            boardIndexes.add(GridHandler.getBoardPosition(x, y));
+            boardIndexes.add(gridHandler.getBoardPosition(x, y));
             x--;
             y--;
         }
         return boardIndexes;
     }
 
-    private static ArrayList<Integer> downLeft(int x, int y) {
+    private ArrayList<Integer> downLeft(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         while (x >= 0 && y <= 7) {
-            boardIndexes.add(GridHandler.getBoardPosition(x, y));
+            boardIndexes.add(gridHandler.getBoardPosition(x, y));
             x--;
             y++;
         }
         return boardIndexes;
     }
 
-    private static ArrayList<Integer> upRight(int x, int y) {
+    private ArrayList<Integer> upRight(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         while (x <= 7 && y >= 0) {
-            boardIndexes.add(GridHandler.getBoardPosition(x, y));
+            boardIndexes.add(gridHandler.getBoardPosition(x, y));
             x++;
             y--;
         }
         return boardIndexes;
     }
 
-    private static ArrayList<Integer> downRight(int x, int y) {
+    private ArrayList<Integer> downRight(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         while (x <= 7 && y <= 7) {
-            boardIndexes.add(GridHandler.getBoardPosition(x, y));
+            boardIndexes.add(gridHandler.getBoardPosition(x, y));
             x++;
             y++;
         }

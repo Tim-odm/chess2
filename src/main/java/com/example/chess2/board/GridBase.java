@@ -9,12 +9,12 @@ import javafx.scene.layout.AnchorPane;
  * @author
  */
 public abstract class GridBase {
-    private double planeWidth;
-    private double planeHeight;
-    private static int tilesAcross;
-    private static int tilesDown;
-    private static int gridSize;
-    private static int tileAmount;
+    private final double planeWidth;
+    private final double planeHeight;
+    private final int tilesAcross;
+    private final int tilesDown;
+    private final int gridSize;
+    private final int tileAmount;
     private AnchorPane anchorPane;
 
     /**
@@ -25,8 +25,8 @@ public abstract class GridBase {
      * @param anchorPane the pane which our grid base is attached to.
      */
     public GridBase(double planeWidth, double planeHeight, int gridSize, AnchorPane anchorPane) {
-        this.planeWidth = 400;
-        this.planeHeight = 400;
+        this.planeWidth = planeWidth;
+        this.planeHeight = planeHeight;
         this.gridSize = gridSize;
         this.anchorPane = anchorPane;
 
@@ -43,19 +43,19 @@ public abstract class GridBase {
         return planeWidth;
     }
 
-    public static int getTilesAcross() {
+    public int getTilesAcross() {
         return tilesAcross;
     }
 
-    public static int getTilesDown() {
+    public int getTilesDown() {
         return tilesDown;
     }
 
-    public static int getGridSize() {
+    public int getGridSize() {
         return gridSize;
     }
 
-    public static int getTileAmount() {
+    public int getTileAmount() {
         return tileAmount;
     }
 

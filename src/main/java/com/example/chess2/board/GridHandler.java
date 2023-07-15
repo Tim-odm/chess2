@@ -15,12 +15,12 @@ import java.util.Arrays;
  */
 public class GridHandler extends GridBase {
 
-    private final static Color bgWhite = Color.WHITE;
-    private final static Color bgGrey = Color.color(0.82, 0.82, 0.82);
-    private final static int[][] boardPositions = new int[8][8];
+    private final Color bgWhite = Color.WHITE;
+    private final Color bgGrey = Color.color(0.82, 0.82, 0.82);
+    private final int[][] boardPositions = new int[8][8];
     private static ArrayList<Rectangle> rectangles;
 
-    private static boolean[] squares;
+    private final boolean[] squares;
 
     /**
      * Constructor for the GridHandler class.
@@ -78,26 +78,10 @@ public class GridHandler extends GridBase {
      * @param y Pixel position in the Y axis.
      * @return Board position index.
      */
-    public static int getBoardPosition(double x, double y) {
+    public int getBoardPosition(double x, double y) {
         int a = (int) ((x/getGridSize()) % getTilesAcross());
         int b = (int) ((y/getGridSize()) % getTilesDown());
         return boardPositions[a][b];
-    }
-
-    /**
-     * This method adds an event handler to each rectangle to make it playable.
-     */
-    public void makePlayable() {
-       for (Rectangle r: rectangles) {
-           r.setOnMouseClicked(mouseEvent -> {
-               double mouseAnchorX = mouseEvent.getSceneX();
-               double mouseAnchorY = mouseEvent.getSceneY();
-
-               int x = (int) ((mouseAnchorX / getGridSize()) % getTilesAcross());
-               int y = (int) ((mouseAnchorY / getGridSize()) % getTilesDown());
-               ChessBoard.potentialMove(x, y);
-           });
-       }
     }
 
     /**
@@ -107,7 +91,7 @@ public class GridHandler extends GridBase {
      * @param y The Y coordinate.
      * @return Board position index.
      */
-    public static int getBoardPosition(int x, int y) {
+    public int getBoardPosition(int x, int y) {
         return boardPositions[x][y];
     }
 
@@ -116,7 +100,7 @@ public class GridHandler extends GridBase {
      * @param potentialMoves An ArrayList containing the index positions of the
      *                       potential moves a piece can make.
      */
-    public static void highlightMoves(ArrayList<Integer> potentialMoves) {
+    public void highlightMoves(ArrayList<Integer> potentialMoves) {
         clearSquaresInPlay();
         for (Integer i: potentialMoves) {
             rectangles.get(i).setFill(Color.LIGHTGREEN);
@@ -124,22 +108,22 @@ public class GridHandler extends GridBase {
         }
     }
 
-    public static void setSquareInPlay(int i) {
+    public void setSquareInPlay(int i) {
         squares[i] = true;
     }
 
-    public static void clearSquaresInPlay() {
+    public void clearSquaresInPlay() {
         Arrays.fill(squares, false);
     }
 
-    public static boolean[] getSquaresInPlay() {
+    public boolean[] getSquaresInPlay() {
         return squares;
     }
 
     /**
      * This method resets the color of all squares on the board.
      */
-    public static void clearBoard() {
+    public void clearBoard() {
         for (int i = 0; i < getTileAmount(); i++) {
             int x = (i % getTilesAcross());
             int y = (i / getTilesAcross());
@@ -154,11 +138,11 @@ public class GridHandler extends GridBase {
 
 
 
-    public static int getXCoord(int boardPosition) {
+    public int getXCoord(int boardPosition) {
         return boardPosition % 8;
     }
 
-    public static int getYCoord(int boardPosition) {
+    public int getYCoord(int boardPosition) {
         return boardPosition / 8;
     }
  }

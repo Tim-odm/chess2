@@ -1,5 +1,7 @@
 package com.example.chess2.board;
 
+import com.example.chess2.Logic.GameLogic;
+import com.example.chess2.Logic.PieceMoves;
 import com.example.chess2.pieces.ChessPiece;
 import com.example.chess2.pieces.King;
 import com.example.chess2.pieces.Queen;
@@ -23,33 +25,46 @@ public class ChessBoard extends AnchorPane {
      */
     private static ArrayList<ChessPiece> pieces;
 
-    public ChessBoard() {
+    private GameLogic logic;
 
-        // Initialise DraggableMakerGrid that defines the logic for the grid.
+    public ChessBoard() {
+        // Initialise the grid handler. Draw our grid here.
+        GridHandler backgroundGridHandler = new GridHandler(400, 400,
+                GRID_SIZE, this);
+
+        // Initialise DraggableMakerGrid that sets the behaviours of objects on the grid.
         DraggableMakerGrid draggableMakerGrid = new DraggableMakerGrid(400, 400,
                 GRID_SIZE, this);
 
-        // Initialise the grid handler.
-        GridHandler backgroundGridHandler = new GridHandler(400, 400,
-                GRID_SIZE, this);
         // Draw the grid.
         backgroundGridHandler.updateGrid();
-        backgroundGridHandler.makePlayable();
+        // backgroundGridHandler.makePlayable();
+
+        // Initialise the PieceMoves object
+        PieceMoves pieceMoves = new PieceMoves(backgroundGridHandler);
+
+        // Initialise the GameLogic object
+        this.logic = new GameLogic(backgroundGridHandler, pieceMoves);
 
         pieces = new ArrayList<>();
         // Add the black king.
-        King bk = new King("BK", this, 150, 0, true);
+        King bk = new King("BK", this, logic,
+                150, 0, true);
         pieces.add(bk);
 
         // Add the black queen.
-        Queen bq = new Queen("BQ", this, 200, 0, true);
+        Queen bq = new Queen("BQ", this, logic,
+                200, 0, true);
         pieces.add(bq);
 
         // Add the white king.
-        King wk = new King("WK", this, 150, 350, false);
+        King wk = new King("WK", this, logic,
+                150, 350, false);
         pieces.add(wk);
 
-        Queen wq = new Queen("WQ", this, 200, 350, false);
+        // Add the white queen lizzy (RIP).
+        Queen wq = new Queen("WQ", this, logic,
+                200, 350, false);
         pieces.add(wq);
 
         this.getChildren().addAll(pieces);
@@ -57,72 +72,10 @@ public class ChessBoard extends AnchorPane {
         draggableMakerGrid.makeDraggable(pieces);
 
         // Add an event handler for the board that clears it whenever it is clicked.
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> clearBoard());
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onMouseClicked);
     }
 
-    /**
-     * This method clears the board and unselects any selected pieces.
-     */
-    public static void clearBoard() {
-        // Method should clear board and also clear moves of a piece to avoid it
-        // moving after the board has been cleared. I.e. moves are still stored on the
-        // piece data but board is cleared
-        GridHandler.clearBoard();
-        for (ChessPiece piece: pieces) {
-            if (piece.getIsSelected()) {
-                System.out.println(piece.getText().getText() + " was selected");
-            }
-            piece.setIsSelected(false);
-        }
-    }
-
-    /**
-     * This method gets a selected piece, if present, on the board.
-     * @return The piece that has been selected or null if not present.
-     */
-    public static ChessPiece getSelectedPiece() {
-        for (ChessPiece piece: pieces) {
-            if (piece.getIsSelected()) {
-                return piece;
-            }
-        }
-        return null;
-    }
-
-    public static void potentialMove(int x, int y) {
-        // Check if piece is in play
-        if (isPieceInPlay()) {
-            // Get the piece in play
-            ChessPiece selectedPiece = getSelectedPiece();
-
-            // Check if the intended position is highlighted.
-            boolean movePotential = checkPlayableMove(x, y);
-            if (selectedPiece != null && movePotential) {
-                // check if the intended square is occupied by an opposing piece.
-                // i.e. check potential capture.
-                DraggableMakerGrid.movePiece(selectedPiece, x, y);
-            } else {
-                GridHandler.clearBoard();
-            }
-        } else {
-            GridHandler.clearBoard();
-        }
-    }
-
-    public void capture() {
-
-    }
-
-    private static boolean isPieceInPlay() {
-        for (ChessPiece piece: pieces) {
-            if (piece.getIsSelected()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean checkPlayableMove(int x, int y) {
-        return GridHandler.getSquaresInPlay()[GridHandler.getBoardPosition(x, y)];
+    private void onMouseClicked(MouseEvent event) {
+        this.logic.boardClickedEvent(event);
     }
 }

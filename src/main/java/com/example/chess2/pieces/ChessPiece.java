@@ -1,5 +1,7 @@
 package com.example.chess2.pieces;
 
+import com.example.chess2.Logic.GameLogic;
+import com.example.chess2.Logic.PieceMoves;
 import com.example.chess2.board.ChessBoard;
 import com.example.chess2.board.GridHandler;
 import javafx.event.EventHandler;
@@ -57,11 +59,13 @@ public abstract class ChessPiece extends StackPane {
      */
     private boolean isSelected;
 
-
+    private GameLogic logic;
+    protected PieceMoves pieceMoves;
 
     private ArrayList<Integer> moves;
 
-    ChessPiece(String name, AnchorPane anchorPane, int posiX, int posiY, boolean isBlack) {
+    ChessPiece(String name, AnchorPane anchorPane, GameLogic logic,
+               int posiX, int posiY, boolean isBlack) {
         // Setting the basics
         this.anchorPane = anchorPane;
         this.setWidth(PANE_SIZE);
@@ -71,6 +75,8 @@ public abstract class ChessPiece extends StackPane {
         this.isSelected = false;
         this.indexX = ((posiX/50) % 8);
         this.indexY = ((posiY/50) % 8);
+        this.logic = logic;
+        this.pieceMoves = logic.getPieceMoves();
 
         // Initialisations
         rectangle = new Rectangle(0,0, PANE_SIZE, PANE_SIZE);
@@ -124,17 +130,9 @@ public abstract class ChessPiece extends StackPane {
      */
     private EventHandler<MouseEvent> clickOnEvent() {
         return mouseEvent -> {
-            // Unselect all pieces.
-            ChessBoard.clearBoard();
-
-            // Set current piece selected to true
-            isSelected = true;
-
-            // Get the possible moves
             int x = (int) ((mouseEvent.getSceneX()/50) % 8);
             int y = (int) ((mouseEvent.getSceneY()/50) % 8);
-            moves = getPossibleMoves(x, y);
-            GridHandler.highlightMoves(moves);
+            logic.selectPiece(this, x , y);
             mouseEvent.consume();
         };
     }

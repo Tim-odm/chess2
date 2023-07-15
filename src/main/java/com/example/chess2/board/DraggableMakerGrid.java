@@ -4,8 +4,6 @@ import com.example.chess2.pieces.ChessPiece;
 import com.example.chess2.pieces.Component;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-
 import java.util.ArrayList;
 
 /**
@@ -107,14 +105,5 @@ public class DraggableMakerGrid extends GridBase {
 
             });
         }
-    }
-
-    // makePlayable method that allows a piece to move when it is in play and selected.
-    public static void movePiece(ChessPiece piece, int x , int y) {
-        piece.updateCurrentPosition(x, y);
-        x *= getGridSize();
-        y *= getGridSize();
-        piece.setLayoutX(x);
-        piece.setLayoutY(y);
     }
 }
