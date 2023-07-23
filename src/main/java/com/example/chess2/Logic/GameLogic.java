@@ -23,10 +23,10 @@ public class GameLogic {
     private ArrayList<Integer> possibleMoves;
     private ArrayList<ChessPiece> pieces;
 
-    public GameLogic(GridHandler gridHandler, PieceMoves pieceMoves, AnchorPane chessBoard) {
+    public GameLogic(GridHandler gridHandler, AnchorPane chessBoard) {
         this.chessBoard = chessBoard;
         this.gridHandler = gridHandler;
-        this.pieceMoves = pieceMoves;
+        this.pieceMoves = new PieceMoves(this);
         this.isPieceInPlay = false;
         this.possibleMoves = new ArrayList<>();
         this.pieces = new ArrayList<>();
@@ -43,6 +43,9 @@ public class GameLogic {
 
     public PieceMoves getPieceMoves() {
         return this.pieceMoves;
+    }
+    public GridHandler getGridHandler() {
+        return this.gridHandler;
     }
 
 
@@ -124,5 +127,16 @@ public class GameLogic {
         for (ChessPiece piece: pieces) {
             piece.setIsInPlay(!piece.getIsInPlay());
         }
+    }
+
+    public boolean pieceInPosition(int x, int y) {
+        for (ChessPiece piece: pieces) {
+            if (piece.getIndexX() == x) {
+                if (piece.getIndexY() == y) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
  }

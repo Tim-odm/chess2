@@ -10,7 +10,8 @@ import java.util.Arrays;
 
 /**
  * This class inherits from GridBase and basically "draws the grid". This class
- * should handle any operations related to 8x8 grid.
+ * should handle any operations related to 8x8 grid, for example getting the
+ * index position of squares on the grid.
  * @author
  */
 public class GridHandler extends GridBase {
@@ -135,8 +136,6 @@ public class GridHandler extends GridBase {
             }
         }
     }
-
-
 
     public int getXCoord(int boardPosition) {
         return boardPosition % 8;

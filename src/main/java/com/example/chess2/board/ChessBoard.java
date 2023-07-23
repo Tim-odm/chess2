@@ -41,11 +41,8 @@ public class ChessBoard extends AnchorPane {
         backgroundGridHandler.updateGrid();
         // backgroundGridHandler.makePlayable();
 
-        // Initialise the PieceMoves object
-        PieceMoves pieceMoves = new PieceMoves(backgroundGridHandler);
-
         // Initialise the GameLogic object
-        this.logic = new GameLogic(backgroundGridHandler, pieceMoves, this);
+        this.logic = new GameLogic(backgroundGridHandler, this);
 
         pieces = new ArrayList<>();
         // Add the black king.
