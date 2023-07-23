@@ -5,7 +5,7 @@ import com.example.chess2.Logic.PieceMoves;
 import com.example.chess2.pieces.ChessPiece;
 import com.example.chess2.pieces.King;
 import com.example.chess2.pieces.Queen;
-import javafx.scene.PointLight;
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 

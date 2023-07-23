@@ -24,6 +24,10 @@ public class King extends ChessPiece {
         moves.add(pieceMoves.down(x, y));
         moves.add(pieceMoves.left(x, y));
         moves.add(pieceMoves.right(x, y));
+        moves.add(pieceMoves.upRightOne(x, y));
+        moves.add(pieceMoves.downRightOne(x, y));
+        moves.add(pieceMoves.upLeftOne(x, y));
+        moves.add(pieceMoves.downLeftOne(x, y));
         return moves;
     }
 }

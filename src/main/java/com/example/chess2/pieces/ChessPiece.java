@@ -2,8 +2,7 @@ package com.example.chess2.pieces;
 
 import com.example.chess2.Logic.GameLogic;
 import com.example.chess2.Logic.PieceMoves;
-import com.example.chess2.board.ChessBoard;
-import com.example.chess2.board.GridHandler;
+
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;

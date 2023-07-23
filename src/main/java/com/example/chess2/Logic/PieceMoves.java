@@ -15,6 +15,39 @@ public class PieceMoves {
             return 0;
         } else return Math.min(i, 7);
     }
+
+    public int upRightOne(int x, int y) {
+        x++;
+        y--;
+        x = keepBounds(x);
+        y = keepBounds(y);
+        return gridHandler.getBoardPosition(x, y);
+    }
+
+    public int downRightOne(int x, int y) {
+        x++;
+        y++;
+        x = keepBounds(x);
+        y = keepBounds(y);
+        return gridHandler.getBoardPosition(x, y);
+    }
+
+    public int upLeftOne(int x, int y) {
+        x--;
+        y--;
+        x = keepBounds(x);
+        y = keepBounds(y);
+        return gridHandler.getBoardPosition(x, y);
+    }
+
+    public int downLeftOne(int x, int y) {
+        x--;
+        y++;
+        x = keepBounds(x);
+        y = keepBounds(y);
+        return gridHandler.getBoardPosition(x, y);
+    }
+
     public int up(int x, int y) {
         y--;
         y = keepBounds(y);
