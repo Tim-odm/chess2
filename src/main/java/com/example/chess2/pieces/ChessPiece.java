@@ -58,6 +58,7 @@ public abstract class ChessPiece extends StackPane {
      * Boolean value to define if a piece is currently being selected.
      */
     private boolean isSelected;
+    private boolean isInPlay;
 
     private GameLogic logic;
     protected PieceMoves pieceMoves;
@@ -72,11 +73,13 @@ public abstract class ChessPiece extends StackPane {
         this.setHeight(PANE_SIZE);
         this.setLayoutX(posiX);
         this.setLayoutY(posiY);
+        this.isBlack = isBlack;
         this.isSelected = false;
         this.indexX = ((posiX/50) % 8);
         this.indexY = ((posiY/50) % 8);
         this.logic = logic;
         this.pieceMoves = logic.getPieceMoves();
+        this.isInPlay = false;
 
         // Initialisations
         rectangle = new Rectangle(0,0, PANE_SIZE, PANE_SIZE);
@@ -98,6 +101,18 @@ public abstract class ChessPiece extends StackPane {
 
         // Event handler for when the mouse exits a piece clearing the board.
         // this.addEventHandler(MouseEvent.MOUSE_EXITED, mouseExitedEvent());
+    }
+
+    public boolean getIsBlack() {
+        return this.isBlack;
+    }
+
+    public void setIsInPlay (boolean isInPlay) {
+        this.isInPlay = isInPlay;
+    }
+
+    public boolean getIsInPlay() {
+        return this.isInPlay;
     }
 
     public int getIndexX() {
@@ -130,10 +145,12 @@ public abstract class ChessPiece extends StackPane {
      */
     private EventHandler<MouseEvent> clickOnEvent() {
         return mouseEvent -> {
-            int x = (int) ((mouseEvent.getSceneX()/50) % 8);
-            int y = (int) ((mouseEvent.getSceneY()/50) % 8);
-            logic.selectPiece(this, x , y);
-            mouseEvent.consume();
+            if (this.isInPlay) {
+                int x = (int) ((mouseEvent.getSceneX() / 50) % 8);
+                int y = (int) ((mouseEvent.getSceneY() / 50) % 8);
+                logic.selectPiece(this, x, y);
+                mouseEvent.consume();
+           }
         };
     }
 
@@ -146,6 +163,7 @@ public abstract class ChessPiece extends StackPane {
     public void updateCurrentPosition(int x, int y) {
         this.indexX = x;
         this.indexY = y;
+        System.out.println("Current position: " + this.indexX + "," + this.indexY);
     }
 
     public abstract ArrayList<Integer> getPossibleMoves(int x, int y);

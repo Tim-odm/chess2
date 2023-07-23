@@ -5,6 +5,7 @@ import com.example.chess2.Logic.PieceMoves;
 import com.example.chess2.pieces.ChessPiece;
 import com.example.chess2.pieces.King;
 import com.example.chess2.pieces.Queen;
+import javafx.scene.PointLight;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -23,7 +24,7 @@ public class ChessBoard extends AnchorPane {
     /**
      * An ArrayList of pieces.
      */
-    private static ArrayList<ChessPiece> pieces;
+    private ArrayList<ChessPiece> pieces;
 
     private GameLogic logic;
 
@@ -44,7 +45,7 @@ public class ChessBoard extends AnchorPane {
         PieceMoves pieceMoves = new PieceMoves(backgroundGridHandler);
 
         // Initialise the GameLogic object
-        this.logic = new GameLogic(backgroundGridHandler, pieceMoves);
+        this.logic = new GameLogic(backgroundGridHandler, pieceMoves, this);
 
         pieces = new ArrayList<>();
         // Add the black king.
@@ -67,6 +68,8 @@ public class ChessBoard extends AnchorPane {
                 200, 350, false);
         pieces.add(wq);
 
+        logic.setPieces(pieces);
+        logic.initialise();
         this.getChildren().addAll(pieces);
 
         draggableMakerGrid.makeDraggable(pieces);
