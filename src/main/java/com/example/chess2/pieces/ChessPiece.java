@@ -21,7 +21,7 @@ public abstract class ChessPiece extends StackPane {
     /**
      * Size of the pane.
      */
-    private final int PANE_SIZE = 50;
+    protected final int PANE_SIZE = 50;
     /**
      * Rectangle object to represent the piece.
      */
@@ -46,12 +46,12 @@ public abstract class ChessPiece extends StackPane {
      */
     private int indexX;
 
-    private int indexY;
+    protected int indexY;
 
     /**
      * Boolean to define if the piece is black or white.
      */
-    private boolean isBlack;
+    protected boolean isBlack;
 
     /**
      * Boolean value to define if a piece is currently being selected.

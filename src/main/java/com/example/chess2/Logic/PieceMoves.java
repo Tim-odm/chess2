@@ -19,6 +19,16 @@ public class PieceMoves {
         } else return Math.min(i, 7);
     }
 
+    public int doubleDown(int x, int y) {
+        y = y + 2;
+        return gridHandler.getBoardPosition(x,y);
+    }
+
+    public int doubleUp(int x, int y) {
+        y = y - 2;
+        return gridHandler.getBoardPosition(x,y);
+    }
+
     public int upRightOne(int x, int y) {
         x++;
         y--;
