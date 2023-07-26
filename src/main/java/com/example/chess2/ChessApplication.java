@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ChessApplication extends javafx.application.Application {
     @Override
@@ -16,6 +17,8 @@ public class ChessApplication extends javafx.application.Application {
     }
 
     public static void main(String[] args) {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        System.out.println(arrayList);
         launch();
     }
 }

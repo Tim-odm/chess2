@@ -1,7 +1,7 @@
 package com.example.chess2.pieces;
 
 import com.example.chess2.Logic.GameLogic;
-import com.example.chess2.Logic.PieceMoves;
+
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;

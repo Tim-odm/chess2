@@ -58,6 +58,7 @@ public class ChessBoard extends AnchorPane {
         // Add a black pawn
         Pawn bp1 = new Pawn("P", this, logic,
                 200, 50, true);
+        bp1.setIsPawn(true);
         pieces.add(bp1);
 
         // Add the white king.
@@ -73,6 +74,7 @@ public class ChessBoard extends AnchorPane {
         // Add a white pawn
         Pawn wp1 = new Pawn("P", this, logic,
                 200, 300, false);
+        wp1.setIsPawn(true);
         pieces.add(wp1);
 
         logic.setPieces(pieces);

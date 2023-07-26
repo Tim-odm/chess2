@@ -21,7 +21,7 @@ public abstract class ChessPiece extends StackPane {
     /**
      * Size of the pane.
      */
-    protected final int PANE_SIZE = 50;
+    protected final int PANE_SIZE = 30;
     /**
      * Rectangle object to represent the piece.
      */
@@ -44,7 +44,7 @@ public abstract class ChessPiece extends StackPane {
     /**
      *
      */
-    private int indexX;
+    protected int indexX;
 
     protected int indexY;
 
@@ -53,13 +53,15 @@ public abstract class ChessPiece extends StackPane {
      */
     protected boolean isBlack;
 
+    private boolean isPawn;
+
     /**
      * Boolean value to define if a piece is currently being selected.
      */
     private boolean isSelected;
     private boolean isInPlay;
 
-    private GameLogic logic;
+    protected GameLogic logic;
     protected PieceMoves pieceMoves;
 
     private ArrayList<Integer> moves;
@@ -70,8 +72,8 @@ public abstract class ChessPiece extends StackPane {
         this.anchorPane = anchorPane;
         this.setWidth(PANE_SIZE);
         this.setHeight(PANE_SIZE);
-        this.setLayoutX(posiX);
-        this.setLayoutY(posiY);
+        this.setLayoutX(posiX + 10);
+        this.setLayoutY(posiY + 10);
         this.isBlack = isBlack;
         this.isSelected = false;
         this.indexX = ((posiX/50) % 8);
@@ -79,6 +81,7 @@ public abstract class ChessPiece extends StackPane {
         this.logic = logic;
         this.pieceMoves = logic.getPieceMoves();
         this.isInPlay = false;
+        this.isPawn = false;
 
         // Initialisations
         rectangle = new Rectangle(0,0, PANE_SIZE, PANE_SIZE);
@@ -97,9 +100,14 @@ public abstract class ChessPiece extends StackPane {
 
         // Event handler for when a piece is clicked on showing possible moves.
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, clickOnEvent());
+    }
 
-        // Event handler for when the mouse exits a piece clearing the board.
-        // this.addEventHandler(MouseEvent.MOUSE_EXITED, mouseExitedEvent());
+    public void setIsPawn(boolean isPawn) {
+        this.isPawn = isPawn;
+    }
+
+    public boolean getIsPawn() {
+        return this.isPawn;
     }
 
     public boolean getIsBlack() {

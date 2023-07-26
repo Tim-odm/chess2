@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Base64;
 
 public class PieceMoves {
-    private GameLogic logic;
-    private GridHandler gridHandler;
+    private final GameLogic logic;
+    private final GridHandler gridHandler;
     public PieceMoves(GameLogic logic) {
         this.logic = logic;
         this.gridHandler = logic.getGridHandler();
@@ -17,6 +17,56 @@ public class PieceMoves {
         if (i < 0) {
             return 0;
         } else return Math.min(i, 7);
+    }
+
+    public int pawnDown(int x, int y) {
+        y++;
+        y = keepBounds(y);
+        if (!logic.pieceInPosition(x,y)) return gridHandler.getBoardPosition(x,y);
+        return -1;
+    }
+
+    public int pawnDownRight(int x, int y) {
+        y++;
+        x++;
+        y = keepBounds(y);
+        x = keepBounds(x);
+        if (logic.pieceInPosition(x,y)) return gridHandler.getBoardPosition(x,y);
+        return -1;
+    }
+
+    public int pawnDownLeft(int x, int y) {
+        y++;
+        x--;
+        y = keepBounds(y);
+        x = keepBounds(x);
+        if (logic.pieceInPosition(x,y)) return gridHandler.getBoardPosition(x,y);
+        return -1;
+    }
+
+    public int pawnUp(int x, int y) {
+        y--;
+        y = keepBounds(y);
+        if (!logic.pieceInPosition(x,y)) return gridHandler.getBoardPosition(x,y);
+        return -1;
+    }
+
+    public int pawnUpRight(int x, int y) {
+        y--;
+        x++;
+        y = keepBounds(y);
+        x = keepBounds(x);
+        if (logic.pieceInPosition(x,y)) return gridHandler.getBoardPosition(x,y);
+        return -1;
+    }
+
+    public int pawnUpLeft(int x, int y) {
+        y--;
+        x--;
+        y = keepBounds(y);
+        x = keepBounds(x);
+        if (logic.pieceInPosition(x,y)) return gridHandler.getBoardPosition(x,y);
+        return -1;
     }
 
     public int doubleDown(int x, int y) {
@@ -120,8 +170,11 @@ public class PieceMoves {
     private ArrayList<Integer> leftStraight(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         while (x >= 0) {
-            boardIndexes.add(gridHandler.getBoardPosition(x, y));
-            if (logic.pieceInPosition(x,y)) break;
+            if (logic.checkPotentialCapture(x,y)) {
+                boardIndexes.add(gridHandler.getBoardPosition(x, y));
+                break;
+            } else if (logic.pieceInPosition(x,y)) break;
+            boardIndexes.add(gridHandler.getBoardPosition(x,y));
             x--;
         }
         return boardIndexes;

@@ -6,8 +6,6 @@ import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
 
 public class Pawn extends ChessPiece {
-    private int startX;
-    private int startY;
 
     public Pawn(String name, AnchorPane anchorPane, GameLogic logic,
                 int posiX, int posiY, boolean isBlack) {
@@ -22,12 +20,28 @@ public class Pawn extends ChessPiece {
             if (this.indexY == 1) {
                 moves.add(pieceMoves.doubleDown(x, y));
             }
-            moves.add(pieceMoves.down(x,y));
+            if (pieceMoves.pawnDown(x,y) != -1) {
+                moves.add(pieceMoves.pawnDown(x,y));
+            }
+            if (pieceMoves.pawnDownRight(x,y) != -1) {
+                moves.add(pieceMoves.pawnDownRight(x,y));
+            }
+            if (pieceMoves.pawnDownLeft(x,y) != -1) {
+                moves.add(pieceMoves.pawnDownLeft(x,y));
+            }
         } else {
             if (this.indexY == 6) {
                 moves.add(pieceMoves.doubleUp(x, y));
             }
-            moves.add(pieceMoves.up(x,y));
+            if (pieceMoves.pawnUp(x,y) != -1) {
+                moves.add(pieceMoves.pawnUp(x,y));
+            }
+            if (pieceMoves.pawnUpRight(x,y) != -1) {
+                moves.add(pieceMoves.pawnUpRight(x,y));
+            }
+            if (pieceMoves.pawnUpLeft(x,y) != -1) {
+                moves.add(pieceMoves.pawnUpLeft(x,y));
+            }
         }
         return moves;
     }

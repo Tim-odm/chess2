@@ -3,6 +3,7 @@ package com.example.chess2.Logic;
 import com.example.chess2.board.GridHandler;
 import com.example.chess2.pieces.ChessPiece;
 
+import com.example.chess2.pieces.Pawn;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -50,34 +51,35 @@ public class GameLogic {
 
 
     public void selectPiece(ChessPiece piece, int x, int y) {
-        gridHandler.clearBoard();
+        this.gridHandler.clearBoard();
         // Set the selected to piece to true
         // piece.setIsSelected(true);
         this.isPieceInPlay = true;
         this.pieceInPlay = piece;
 
         // get the possible moves of the piece.
-        possibleMoves =
+        this.possibleMoves =
                 new ArrayList<>(piece.getPossibleMoves(x, y));
 
         // Highlight the piece's possible moves.
-        gridHandler.highlightMoves(possibleMoves);
+        this.gridHandler.highlightMoves(possibleMoves);
     }
 
     public void boardClickedEvent(MouseEvent event) {
-        if (isPieceInPlay) {
+        if (this.isPieceInPlay) {
             int x = (int) ((event.getSceneX() / GRID_SIZE));
             int y = (int) ((event.getSceneY() / GRID_SIZE));
+
             if (checkPotentialMove(x, y)) {
                 // Check for a potential capture
                 if (checkPotentialCapture(x, y)) {
                     ChessPiece capturedPiece = getByIndex(x, y);
-                    chessBoard.getChildren().remove(capturedPiece);
-                    pieces.remove(capturedPiece);
+                    this.chessBoard.getChildren().remove(capturedPiece);
+                    this.pieces.remove(capturedPiece);
                 }
-                pieceInPlay.setLayoutX(x * GRID_SIZE);
-                pieceInPlay.setLayoutY(y * GRID_SIZE);
-                pieceInPlay.updateCurrentPosition(x, y);
+                this.pieceInPlay.setLayoutX((x * GRID_SIZE) + 10);
+                this.pieceInPlay.setLayoutY((y * GRID_SIZE) + 10);
+                this.pieceInPlay.updateCurrentPosition(x, y);
                 this.switchPlay();
             }
             this.gridHandler.clearBoard();
@@ -92,10 +94,10 @@ public class GameLogic {
         return possibleMoves.contains(gridHandler.getBoardPosition(x, y));
     }
 
-    private boolean checkPotentialCapture(int x, int y) {
-        // Loop through all the pieces on the board.checking if any piece is on
+    public boolean checkPotentialCapture(int x, int y) {
+        // Loop through all the pieces on the board, checking if any piece is on
         // position x,y.
-        for (ChessPiece piece: pieces) {
+        for (ChessPiece piece: this.pieces) {
             if (this.pieceInPlay.getIsBlack() != piece.getIsBlack()) {
                 if (piece.getIndexX() == x && piece.getIndexY() == y) {
                     return true;
@@ -105,8 +107,14 @@ public class GameLogic {
         return false;
     }
 
+    private boolean checkPotentialPawnCapture(int x, int y) {
+        // If the piece in play is a pawn and the y position of the potential capture
+        // is on the same X axis then it remove the potential capture
+        return this.pieceInPlay.getIsPawn() && x != this.pieceInPlay.getIndexX();
+    }
+
     private ChessPiece getByIndex(int x, int y) {
-        for (ChessPiece piece: pieces) {
+        for (ChessPiece piece: this.pieces) {
             if (piece.getIndexX() == x && piece.getIndexY() == y) {
                 return piece;
             }
@@ -124,13 +132,13 @@ public class GameLogic {
 
     public void switchPlay() {
         // this.blackInPlay = !this.blackInPlay;
-        for (ChessPiece piece: pieces) {
+        for (ChessPiece piece: this.pieces) {
             piece.setIsInPlay(!piece.getIsInPlay());
         }
     }
 
     public boolean pieceInPosition(int x, int y) {
-        for (ChessPiece piece: pieces) {
+        for (ChessPiece piece: this.pieces) {
             if (piece.getIndexX() == x) {
                 if (piece.getIndexY() == y) {
                     return true;
