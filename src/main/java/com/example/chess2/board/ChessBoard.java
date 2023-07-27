@@ -1,10 +1,7 @@
 package com.example.chess2.board;
 
 import com.example.chess2.Logic.GameLogic;
-import com.example.chess2.pieces.ChessPiece;
-import com.example.chess2.pieces.King;
-import com.example.chess2.pieces.Pawn;
-import com.example.chess2.pieces.Queen;
+import com.example.chess2.pieces.*;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -55,6 +52,11 @@ public class ChessBoard extends AnchorPane {
                 200, 0, true);
         pieces.add(bq);
 
+        // Add a black knight;
+        Knight bknight1 = new Knight("BKn", this, logic,
+                300, 0, true);
+        pieces.add(bknight1);
+
         // Add a black pawn
         Pawn bp1 = new Pawn("P", this, logic,
                 200, 50, true);
@@ -70,6 +72,11 @@ public class ChessBoard extends AnchorPane {
         Queen wq = new Queen("WQ", this, logic,
                 200, 350, false);
         pieces.add(wq);
+
+        // Add a black knight;
+        Knight wknight1 = new Knight("BKn", this, logic,
+                300, 350, false);
+        pieces.add(wknight1);
 
         // Add a white pawn
         Pawn wp1 = new Pawn("P", this, logic,

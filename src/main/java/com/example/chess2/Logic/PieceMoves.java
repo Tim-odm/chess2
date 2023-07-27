@@ -19,6 +19,70 @@ public class PieceMoves {
         } else return Math.min(i, 7);
     }
 
+    public int knightUpRight(int x, int y) {
+        x++;
+        y = y-2;
+        return knightLogic(x,y);
+    }
+
+    public int knightDownRight(int x, int y) {
+        x++;
+        y = y+2;
+        return knightLogic(x,y);
+    }
+
+    public int knightUpLeft(int x, int y) {
+        x--;
+        y = y-2;
+        return knightLogic(x,y);
+    }
+
+    public int knightDownLeft(int x, int y) {
+        x--;
+        y = y+2;
+        return knightLogic(x,y);
+    }
+
+    public int knightRightUp(int x, int y) {
+        x = x+2;
+        y--;
+        return knightLogic(x,y);
+    }
+
+    public int knightRightDown(int x, int y) {
+        x = x+2;
+        y++;
+        return knightLogic(x,y);
+    }
+
+    public int knightLeftUp(int x, int y) {
+        x = x-2;
+        y--;
+        return knightLogic(x,y);
+    }
+
+    public int knightLeftDown(int x, int y) {
+        x = x-2;
+        y++;
+        return knightLogic(x,y);
+    }
+
+    private int knightLogic(int x, int y) {
+        if (knightMoveOutOfBounds(x,y)) {
+            return -1;
+        } else if (logic.checkPotentialCapture(x,y)) {
+            return gridHandler.getBoardPosition(x,y);
+        } else if (logic.pieceInPosition(x,y)) {
+            return -1;
+        } else {
+            return gridHandler.getBoardPosition(x, y);
+        }
+    }
+
+    private boolean knightMoveOutOfBounds(int x, int y) {
+        return x < 0 || x > 7 || y < 0 || y > 7;
+    }
+
     public int pawnDown(int x, int y) {
         y++;
         y = keepBounds(y);

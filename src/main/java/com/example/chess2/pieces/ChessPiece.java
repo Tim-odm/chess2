@@ -66,7 +66,7 @@ public abstract class ChessPiece extends StackPane {
 
     private ArrayList<Integer> moves;
 
-    ChessPiece(String name, AnchorPane anchorPane, GameLogic logic,
+    public ChessPiece(String name, AnchorPane anchorPane, GameLogic logic,
                int posiX, int posiY, boolean isBlack) {
         // Setting the basics
         this.anchorPane = anchorPane;
