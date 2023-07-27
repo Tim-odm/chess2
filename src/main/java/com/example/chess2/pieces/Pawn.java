@@ -15,33 +15,22 @@ public class Pawn extends ChessPiece {
     @Override
     public ArrayList<Integer> getPossibleMoves(int x, int y) {
         ArrayList<Integer> moves = new ArrayList<>();
-        // Program Double move
         if (this.isBlack) {
-            if (this.indexY == 1) {
-                moves.add(pieceMoves.doubleDown(x, y));
-            }
             if (pieceMoves.pawnDown(x,y) != -1) {
                 moves.add(pieceMoves.pawnDown(x,y));
+                if (this.indexY == 1 && pieceMoves.doubleDown(x,y) != -1)
+                    moves.add(pieceMoves.doubleDown(x, y));
             }
-            if (pieceMoves.pawnDownRight(x,y) != -1) {
-                moves.add(pieceMoves.pawnDownRight(x,y));
-            }
-            if (pieceMoves.pawnDownLeft(x,y) != -1) {
-                moves.add(pieceMoves.pawnDownLeft(x,y));
-            }
+            if (pieceMoves.pawnDownRight(x,y) != -1) moves.add(pieceMoves.pawnDownRight(x,y));
+            if (pieceMoves.pawnDownLeft(x,y) != -1) moves.add(pieceMoves.pawnDownLeft(x,y));
         } else {
-            if (this.indexY == 6) {
-                moves.add(pieceMoves.doubleUp(x, y));
-            }
             if (pieceMoves.pawnUp(x,y) != -1) {
                 moves.add(pieceMoves.pawnUp(x,y));
+                if (this.indexY == 6 && pieceMoves.doubleUp(x,y) != -1)
+                    moves.add(pieceMoves.doubleUp(x, y));
             }
-            if (pieceMoves.pawnUpRight(x,y) != -1) {
-                moves.add(pieceMoves.pawnUpRight(x,y));
-            }
-            if (pieceMoves.pawnUpLeft(x,y) != -1) {
-                moves.add(pieceMoves.pawnUpLeft(x,y));
-            }
+            if (pieceMoves.pawnUpLeft(x,y) != -1) moves.add(pieceMoves.pawnUpRight(x,y));
+            if (pieceMoves.pawnUpLeft(x,y) != -1) moves.add(pieceMoves.pawnUpLeft(x,y));
         }
         return moves;
     }

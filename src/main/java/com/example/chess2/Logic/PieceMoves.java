@@ -3,7 +3,6 @@ package com.example.chess2.Logic;
 import com.example.chess2.board.GridHandler;
 
 import java.util.ArrayList;
-import java.util.Base64;
 
 public class PieceMoves {
     private final GameLogic logic;
@@ -19,56 +18,120 @@ public class PieceMoves {
         } else return Math.min(i, 7);
     }
 
+    public int pawnDown(int x, int y) {
+        y++;
+        if (moveOutOfBounds(x,y) || logic.pieceInPosition(x,y)) {
+            return -1;
+        } else {
+            return gridHandler.getBoardPosition(x,y);
+        }
+    }
+
+    public int pawnDownRight(int x, int y) {
+        x++;
+        y++;
+        return pawnCaptureLogic(x,y);
+    }
+
+    public int pawnDownLeft(int x, int y) {
+        x--;
+        y++;
+        return pawnCaptureLogic(x,y);
+    }
+
+    public int pawnUp(int x, int y) {
+        y--;
+        if (moveOutOfBounds(x,y) || logic.pieceInPosition(x,y)) {
+            return -1;
+        } else {
+            return gridHandler.getBoardPosition(x,y);
+        }
+    }
+
+    public int pawnUpLeft(int x, int y) {
+        x--;
+        y--;
+        return pawnCaptureLogic(x,y);
+    }
+
+    public int pawnUpRight(int x, int y) {
+        x--;
+        y--;
+        return pawnCaptureLogic(x,y);
+    }
+
+    public int doubleDown(int x, int y) {
+        y = y + 2;
+        if (logic.pieceInPosition(x,y)) return -1;
+        return gridHandler.getBoardPosition(x,y);
+    }
+
+    public int doubleUp(int x, int y) {
+        y = y - 2;
+        if (logic.pieceInPosition(x,y)) return -1;
+        return gridHandler.getBoardPosition(x,y);
+    }
+
+    private int pawnCaptureLogic(int x, int y) {
+        if (moveOutOfBounds(x,y)) {
+            return -1;
+        } else if (logic.checkPotentialCapture(x,y)) {
+            return gridHandler.getBoardPosition(x,y);
+        } else {
+            return -1;
+        }
+    }
+
     public int knightUpRight(int x, int y) {
         x++;
         y = y-2;
-        return knightLogic(x,y);
+        return moveLogic(x,y);
     }
 
     public int knightDownRight(int x, int y) {
         x++;
         y = y+2;
-        return knightLogic(x,y);
+        return moveLogic(x,y);
     }
 
     public int knightUpLeft(int x, int y) {
         x--;
         y = y-2;
-        return knightLogic(x,y);
+        return moveLogic(x,y);
     }
 
     public int knightDownLeft(int x, int y) {
         x--;
         y = y+2;
-        return knightLogic(x,y);
+        return moveLogic(x,y);
     }
 
     public int knightRightUp(int x, int y) {
         x = x+2;
         y--;
-        return knightLogic(x,y);
+        return moveLogic(x,y);
     }
 
     public int knightRightDown(int x, int y) {
         x = x+2;
         y++;
-        return knightLogic(x,y);
+        return moveLogic(x,y);
     }
 
     public int knightLeftUp(int x, int y) {
         x = x-2;
         y--;
-        return knightLogic(x,y);
+        return moveLogic(x,y);
     }
 
     public int knightLeftDown(int x, int y) {
         x = x-2;
         y++;
-        return knightLogic(x,y);
+        return moveLogic(x,y);
     }
 
-    private int knightLogic(int x, int y) {
-        if (knightMoveOutOfBounds(x,y)) {
+    private int moveLogic(int x, int y) {
+        if (moveOutOfBounds(x,y)) {
             return -1;
         } else if (logic.checkPotentialCapture(x,y)) {
             return gridHandler.getBoardPosition(x,y);
@@ -79,124 +142,52 @@ public class PieceMoves {
         }
     }
 
-    private boolean knightMoveOutOfBounds(int x, int y) {
+    private boolean moveOutOfBounds(int x, int y) {
         return x < 0 || x > 7 || y < 0 || y > 7;
-    }
-
-    public int pawnDown(int x, int y) {
-        y++;
-        y = keepBounds(y);
-        if (!logic.pieceInPosition(x,y)) return gridHandler.getBoardPosition(x,y);
-        return -1;
-    }
-
-    public int pawnDownRight(int x, int y) {
-        y++;
-        x++;
-        y = keepBounds(y);
-        x = keepBounds(x);
-        if (logic.pieceInPosition(x,y)) return gridHandler.getBoardPosition(x,y);
-        return -1;
-    }
-
-    public int pawnDownLeft(int x, int y) {
-        y++;
-        x--;
-        y = keepBounds(y);
-        x = keepBounds(x);
-        if (logic.pieceInPosition(x,y)) return gridHandler.getBoardPosition(x,y);
-        return -1;
-    }
-
-    public int pawnUp(int x, int y) {
-        y--;
-        y = keepBounds(y);
-        if (!logic.pieceInPosition(x,y)) return gridHandler.getBoardPosition(x,y);
-        return -1;
-    }
-
-    public int pawnUpRight(int x, int y) {
-        y--;
-        x++;
-        y = keepBounds(y);
-        x = keepBounds(x);
-        if (logic.pieceInPosition(x,y)) return gridHandler.getBoardPosition(x,y);
-        return -1;
-    }
-
-    public int pawnUpLeft(int x, int y) {
-        y--;
-        x--;
-        y = keepBounds(y);
-        x = keepBounds(x);
-        if (logic.pieceInPosition(x,y)) return gridHandler.getBoardPosition(x,y);
-        return -1;
-    }
-
-    public int doubleDown(int x, int y) {
-        y = y + 2;
-        return gridHandler.getBoardPosition(x,y);
-    }
-
-    public int doubleUp(int x, int y) {
-        y = y - 2;
-        return gridHandler.getBoardPosition(x,y);
     }
 
     public int upRightOne(int x, int y) {
         x++;
         y--;
-        x = keepBounds(x);
-        y = keepBounds(y);
-        return gridHandler.getBoardPosition(x, y);
+        return moveLogic(x,y);
     }
 
     public int downRightOne(int x, int y) {
         x++;
         y++;
-        x = keepBounds(x);
-        y = keepBounds(y);
-        return gridHandler.getBoardPosition(x, y);
+        return moveLogic(x,y);
     }
 
     public int upLeftOne(int x, int y) {
         x--;
         y--;
-        x = keepBounds(x);
-        y = keepBounds(y);
-        return gridHandler.getBoardPosition(x, y);
+        return moveLogic(x,y);
     }
 
     public int downLeftOne(int x, int y) {
         x--;
         y++;
-        x = keepBounds(x);
-        y = keepBounds(y);
-        return gridHandler.getBoardPosition(x, y);
+        return moveLogic(x,y);
     }
 
     public int up(int x, int y) {
         y--;
-        y = keepBounds(y);
-        return this.gridHandler.getBoardPosition(x, y);
+        return moveLogic(x,y);
     }
 
     public int down(int x, int y) {
         y++;
-        y = keepBounds(y);
-        return gridHandler.getBoardPosition(x, y);
+        return moveLogic(x,y);
     }
 
     public int right(int x, int y) {
         x--;
-        x = keepBounds(x);
-        return gridHandler.getBoardPosition(x, y);
+        return moveLogic(x,y);
     }
 
     public int left(int x, int y) {
         x++;
-        x = keepBounds(x);
-        return gridHandler.getBoardPosition(x, y);
+        return moveLogic(x,y);
     }
 
     public ArrayList<Integer> straights(int x, int y) {
@@ -214,8 +205,11 @@ public class PieceMoves {
     private ArrayList<Integer> upStraight(int x, int y){
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         while (y >= 0) {
-            boardIndexes.add(gridHandler.getBoardPosition(x, y));
-            if (logic.pieceInPosition(x,y)) break;
+            if (logic.checkPotentialCapture(x,y)) {
+                boardIndexes.add(gridHandler.getBoardPosition(x, y));
+                break;
+            } else if (logic.pieceInPosition(x,y)) break;
+            boardIndexes.add(gridHandler.getBoardPosition(x,y));
             y--;
         }
         return boardIndexes;
@@ -224,8 +218,11 @@ public class PieceMoves {
     private ArrayList<Integer> downStraight(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         while (y <= 7) {
-            boardIndexes.add(gridHandler.getBoardPosition(x, y));
-            if (logic.pieceInPosition(x,y)) break;
+            if (logic.checkPotentialCapture(x,y)) {
+                boardIndexes.add(gridHandler.getBoardPosition(x, y));
+                break;
+            } else if (logic.pieceInPosition(x,y)) break;
+            boardIndexes.add(gridHandler.getBoardPosition(x,y));
             y++;
         }
         return boardIndexes;
@@ -247,8 +244,11 @@ public class PieceMoves {
     private ArrayList<Integer> rightStraight(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         while (x <= 7) {
-            boardIndexes.add(gridHandler.getBoardPosition(x, y));
-            if (logic.pieceInPosition(x,y)) break;
+            if (logic.checkPotentialCapture(x,y)) {
+                boardIndexes.add(gridHandler.getBoardPosition(x, y));
+                break;
+            } else if (logic.pieceInPosition(x,y)) break;
+            boardIndexes.add(gridHandler.getBoardPosition(x,y));
             x++;
         }
         return boardIndexes;
@@ -266,8 +266,11 @@ public class PieceMoves {
     private ArrayList<Integer> upLeft(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         while(x >= 0 && y >= 0) {
-            boardIndexes.add(gridHandler.getBoardPosition(x, y));
-            if (logic.pieceInPosition(x,y)) break;
+            if (logic.checkPotentialCapture(x,y)) {
+                boardIndexes.add(gridHandler.getBoardPosition(x, y));
+                break;
+            } else if (logic.pieceInPosition(x,y)) break;
+            boardIndexes.add(gridHandler.getBoardPosition(x,y));
             x--;
             y--;
         }
@@ -277,8 +280,11 @@ public class PieceMoves {
     private ArrayList<Integer> downLeft(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         while (x >= 0 && y <= 7) {
-            boardIndexes.add(gridHandler.getBoardPosition(x, y));
-            if (logic.pieceInPosition(x,y)) break;
+            if (logic.checkPotentialCapture(x,y)) {
+                boardIndexes.add(gridHandler.getBoardPosition(x, y));
+                break;
+            } else if (logic.pieceInPosition(x,y)) break;
+            boardIndexes.add(gridHandler.getBoardPosition(x,y));
             x--;
             y++;
         }
@@ -288,8 +294,11 @@ public class PieceMoves {
     private ArrayList<Integer> upRight(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         while (x <= 7 && y >= 0) {
-            boardIndexes.add(gridHandler.getBoardPosition(x, y));
-            if (logic.pieceInPosition(x,y)) break;
+            if (logic.checkPotentialCapture(x,y)) {
+                boardIndexes.add(gridHandler.getBoardPosition(x, y));
+                break;
+            } else if (logic.pieceInPosition(x,y)) break;
+            boardIndexes.add(gridHandler.getBoardPosition(x,y));
             x++;
             y--;
         }
@@ -299,8 +308,11 @@ public class PieceMoves {
     private ArrayList<Integer> downRight(int x, int y) {
         ArrayList<Integer> boardIndexes = new ArrayList<>();
         while (x <= 7 && y <= 7) {
-            boardIndexes.add(gridHandler.getBoardPosition(x, y));
-            if (logic.pieceInPosition(x,y)) break;
+            if (logic.checkPotentialCapture(x,y)) {
+                boardIndexes.add(gridHandler.getBoardPosition(x, y));
+                break;
+            } else if (logic.pieceInPosition(x,y)) break;
+            boardIndexes.add(gridHandler.getBoardPosition(x,y));
             x++;
             y++;
         }
