@@ -57,11 +57,37 @@ public class ChessBoard extends AnchorPane {
                 300, 0, true);
         pieces.add(bknight1);
 
-        // Add a black pawn
-        Pawn bp1 = new Pawn("P", this, logic,
-                200, 50, true);
-        bp1.setIsPawn(true);
-        pieces.add(bp1);
+        // Add a black knight;
+        Knight bknight2 = new Knight("BKn", this, logic,
+                50, 0, true);
+        pieces.add(bknight2);
+
+        // Add a black bishop
+        Bishop blackBishop1 = new Bishop("BB", this, logic,
+                100, 0, true);
+        pieces.add(blackBishop1);
+
+        // Add a black bishop
+        Bishop blackBishop2 = new Bishop("BB", this, logic,
+                250, 0, true);
+        pieces.add(blackBishop2);
+
+        // Add the rooks
+        Rook blackRook1 = new Rook("BR", this, logic,
+                0,0, true);
+        pieces.add(blackRook1);
+
+        Rook blackRook2 = new Rook("BR", this, logic,
+                350,0, true);
+        pieces.add(blackRook2);
+
+        // Add all black pawns
+        for (int i = 0; i < 8; i++) {
+            Pawn bp = new Pawn("P", this, logic,
+                    i*50, 50, true);
+            bp.setIsPawn(true);
+            pieces.add(bp);
+        }
 
         // Add the white king.
         King wk = new King("WK", this, logic,
@@ -73,16 +99,40 @@ public class ChessBoard extends AnchorPane {
                 200, 350, false);
         pieces.add(wq);
 
-        // Add a black knight;
-        Knight wknight1 = new Knight("BKn", this, logic,
+        // Add a white knight;
+        Knight wknight1 = new Knight("WKn", this, logic,
                 300, 350, false);
         pieces.add(wknight1);
 
-        // Add a white pawn
-        Pawn wp1 = new Pawn("P", this, logic,
-                200, 300, false);
-        wp1.setIsPawn(true);
-        pieces.add(wp1);
+        Knight whiteKnight2 = new Knight("WKn", this, logic,
+                50, 350, false);
+        pieces.add(whiteKnight2);
+
+        // Add a white bishop
+        Bishop whiteBishop1 = new Bishop("WB", this, logic,
+                100, 350, false);
+        pieces.add(whiteBishop1);
+
+        Bishop whiteBishop2 = new Bishop("WB", this, logic,
+                250, 350, false);
+        pieces.add(whiteBishop2);
+
+        // Add the white rooks
+        Rook whiteRook1 = new Rook("WR", this, logic,
+                0,350, false);
+        pieces.add(whiteRook1);
+
+        Rook whiteRook2 = new Rook("WR", this, logic,
+                350,350, false);
+        pieces.add(whiteRook2);
+
+        // Add all white pawns
+        for (int i = 0; i < 8; i++) {
+            Pawn p = new Pawn("P", this, logic,
+                    i*50, 300, false);
+            p.setIsPawn(true);
+            pieces.add(p);
+        }
 
         logic.setPieces(pieces);
         logic.initialise();

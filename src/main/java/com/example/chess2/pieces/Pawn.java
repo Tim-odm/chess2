@@ -29,7 +29,7 @@ public class Pawn extends ChessPiece {
                 if (this.indexY == 6 && pieceMoves.doubleUp(x,y) != -1)
                     moves.add(pieceMoves.doubleUp(x, y));
             }
-            if (pieceMoves.pawnUpLeft(x,y) != -1) moves.add(pieceMoves.pawnUpRight(x,y));
+            if (pieceMoves.pawnUpRight(x,y) != -1) moves.add(pieceMoves.pawnUpRight(x,y));
             if (pieceMoves.pawnUpLeft(x,y) != -1) moves.add(pieceMoves.pawnUpLeft(x,y));
         }
         return moves;
