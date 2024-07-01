@@ -5,7 +5,6 @@ import javafx.scene.layout.AnchorPane;
 /**
  * This class defines the base of our 8x8 grid.
  *
- * Please Note: It was not written by me. The author is
  * @author
  */
 public abstract class GridBase {
